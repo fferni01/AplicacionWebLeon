@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top" class="top">
+             <h:form>
+                <p:growl id="messages"/>
+                
+                    <p:sidebar widgetVar="sidebar1" showCloseIcon="false">
+                        <p:commandButton icon="pi pi-bars" type="button" onclick="PF('sidebar1').hide()" styleClass="p-mr-2" style="margin-left: -10px; margin-top:-20px  "/>
+                        <h3>León</h3>
+                        <p:commandButton value="Noticias" styleClass="ui-button-flat" icon="pi pi-book" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                        <br></br>
+                        <p:commandButton value="Eventos" styleClass="ui-button-flat" icon="pi pi-ticket" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px" />
+                        <br></br>
+                        <p:commandButton value="Museos"  styleClass="ui-button-flat" icon="pi pi-home" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                        <h3>Perfil</h3>
+                        <p:commandButton value="Mi perfil" styleClass="ui-button-flat" icon="pi pi-user" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px" />
+                    </p:sidebar>
+
+                    <p:commandButton icon="pi pi-bars" type="button" onclick="PF('sidebar1').show()" styleClass="p-mr-2" />
+                    <p:commandButton value="Cerrar Sesion" action="#{iniciarSesionController.destruirSesion()}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                    <p:commandButton value="Perfil" icon="pi pi-user" iconPos="left" style="float: right"/>
+                    <p:commandButton icon="pi pi-star WhiteBlue Fs50" iconPos="left" style="float: right; margin: 0px 5px 0px 0px;" />
+               
+            </h:form>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

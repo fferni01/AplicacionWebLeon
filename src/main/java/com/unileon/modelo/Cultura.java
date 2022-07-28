@@ -7,7 +7,6 @@ package com.unileon.modelo;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,34 +15,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
  * @author Usuario
  */
 @Entity
-@Table(name = "noticias")
-public class Noticia implements Serializable{
+@Table(name = "cultura")
+public class Cultura implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idNoticia;
+    private int idCultura;
     @Column(name = "Titulo")
     private String Titulo;
-    @Column(name="Fecha")
-    @Temporal(TemporalType.DATE)
-    private Date Fecha;
+    @Column(name = "Url")
+    private String Url;
+    @Column(name = "Direccion")
+    private String Direccion;
     @Lob
     @Column(name = "Imagen")
-    private byte[] imagen;
-   
-    public int getIdNoticia() {
-        return idNoticia;
+    private byte[] Imagen;
+
+    public int getIdCultura() {
+        return idCultura;
     }
 
-    public void setIdNoticia(int idNoticia) {
-        this.idNoticia = idNoticia;
+    public void setIdCultura(int idCultura) {
+        this.idCultura = idCultura;
     }
 
     public String getTitulo() {
@@ -54,20 +53,38 @@ public class Noticia implements Serializable{
         this.Titulo = Titulo;
     }
 
-    public byte[] getImagen() {
-        return imagen;
+    public String getUrl() {
+        return Url;
     }
 
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
+    public void setUrl(String Url) {
+        this.Url = Url;
+    }
+
+    public String getDireccion() {
+        return Direccion;
+    }
+
+    public void setDireccion(String Direccion) {
+        this.Direccion = Direccion;
+    }
+
+    public byte[] getImagen() {
+        return Imagen;
+    }
+
+    public void setImagen(byte[] Imagen) {
+        this.Imagen = Imagen;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.idNoticia;
-        hash = 97 * hash + Objects.hashCode(this.Titulo);
-        hash = 97 * hash + Arrays.hashCode(this.imagen);
+        int hash = 7;
+        hash = 73 * hash + this.idCultura;
+        hash = 73 * hash + Objects.hashCode(this.Titulo);
+        hash = 73 * hash + Objects.hashCode(this.Url);
+        hash = 73 * hash + Objects.hashCode(this.Direccion);
+        hash = 73 * hash + Arrays.hashCode(this.Imagen);
         return hash;
     }
 
@@ -82,19 +99,24 @@ public class Noticia implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Noticia other = (Noticia) obj;
-        if (this.idNoticia != other.idNoticia) {
+        final Cultura other = (Cultura) obj;
+        if (this.idCultura != other.idCultura) {
             return false;
         }
         if (!Objects.equals(this.Titulo, other.Titulo)) {
             return false;
         }
-        if (!Arrays.equals(this.imagen, other.imagen)) {
+        if (!Objects.equals(this.Url, other.Url)) {
+            return false;
+        }
+        if (!Objects.equals(this.Direccion, other.Direccion)) {
+            return false;
+        }
+        if (!Arrays.equals(this.Imagen, other.Imagen)) {
             return false;
         }
         return true;
     }
 
-    
     
 }

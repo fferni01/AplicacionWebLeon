@@ -28,8 +28,8 @@ public class InsertarNoticiasBD implements Serializable{
     @EJB
      private UsuarioFacadeLocal usuarioEJB;
     
-    public InsertarNoticiasBD() {
-       noticia = new Noticia();
+    public InsertarNoticiasBD(Noticia noticia) {
+       this.noticia = noticia;
        insertar();
     }
     
@@ -38,7 +38,7 @@ public class InsertarNoticiasBD implements Serializable{
     public void insertar() {
         //try{
             noticia.setTitulo("a");
-            noticia.setCuerpo("hola");
+           
            System.out.println(NoticiaEJB);
            /* File f = new File("C:/Users/Usuario/Documents/NetBeansProjects/TFG/src/main/webapp/resources/Imagenes/i.jpg");
             InputStream is;

@@ -49,13 +49,13 @@ public class IndexController implements Serializable{
      
      @PostConstruct
     public void init() {
-         try {
+        /* try {
              //BeepClock();
 
-             creaNoticia();
+           //  creaNoticia();
          } catch (IOException ex) {
              Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-         }
+         }*/
      
         rellenaLista();
          System.out.println(lista.get(0).getName());
@@ -143,7 +143,7 @@ public class IndexController implements Serializable{
 
          Noticia noticia = new Noticia();
            noticia.setTitulo("bs");
-           noticia.setCuerpo("sfdsafd");
+          
 
            File f = new File("C:/Users/Usuario/Documents/NetBeansProjects/TFG/src/main/webapp/resources/Imagenes/i.jpg");
             InputStream is;

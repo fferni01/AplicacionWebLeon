@@ -7,7 +7,6 @@ package com.unileon.modelo;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,34 +15,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
  * @author Usuario
  */
 @Entity
-@Table(name = "noticias")
-public class Noticia implements Serializable{
-    @Id
+@Table(name = "parques")
+public class Parques implements Serializable{
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idNoticia;
+    private int idParque;
     @Column(name = "Titulo")
     private String Titulo;
-    @Column(name="Fecha")
-    @Temporal(TemporalType.DATE)
-    private Date Fecha;
+    @Column(name = "Url")
+    private String Url;
+    @Column(name = "Direccion")
+    private String Direccion;
     @Lob
     @Column(name = "Imagen")
     private byte[] imagen;
-   
-    public int getIdNoticia() {
-        return idNoticia;
+
+    public int getIdParque() {
+        return idParque;
     }
 
-    public void setIdNoticia(int idNoticia) {
-        this.idNoticia = idNoticia;
+    public void setIdParque(int idParque) {
+        this.idParque = idParque;
     }
 
     public String getTitulo() {
@@ -52,6 +50,22 @@ public class Noticia implements Serializable{
 
     public void setTitulo(String Titulo) {
         this.Titulo = Titulo;
+    }
+
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String Url) {
+        this.Url = Url;
+    }
+
+    public String getDireccion() {
+        return Direccion;
+    }
+
+    public void setDireccion(String Direccion) {
+        this.Direccion = Direccion;
     }
 
     public byte[] getImagen() {
@@ -64,10 +78,12 @@ public class Noticia implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.idNoticia;
-        hash = 97 * hash + Objects.hashCode(this.Titulo);
-        hash = 97 * hash + Arrays.hashCode(this.imagen);
+        int hash = 7;
+        hash = 79 * hash + this.idParque;
+        hash = 79 * hash + Objects.hashCode(this.Titulo);
+        hash = 79 * hash + Objects.hashCode(this.Url);
+        hash = 79 * hash + Objects.hashCode(this.Direccion);
+        hash = 79 * hash + Arrays.hashCode(this.imagen);
         return hash;
     }
 
@@ -82,11 +98,17 @@ public class Noticia implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Noticia other = (Noticia) obj;
-        if (this.idNoticia != other.idNoticia) {
+        final Parques other = (Parques) obj;
+        if (this.idParque != other.idParque) {
             return false;
         }
         if (!Objects.equals(this.Titulo, other.Titulo)) {
+            return false;
+        }
+        if (!Objects.equals(this.Url, other.Url)) {
+            return false;
+        }
+        if (!Objects.equals(this.Direccion, other.Direccion)) {
             return false;
         }
         if (!Arrays.equals(this.imagen, other.imagen)) {
@@ -94,7 +116,5 @@ public class Noticia implements Serializable{
         }
         return true;
     }
-
-    
     
 }

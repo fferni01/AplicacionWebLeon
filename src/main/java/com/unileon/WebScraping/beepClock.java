@@ -37,7 +37,7 @@ public class beepClock implements Runnable,Serializable{
         noticia = new Noticia();
         
         noticia.setTitulo("a");
-        noticia.setCuerpo("hola");
+        
         System.out.println(noticia.getTitulo());
         try {
             File f = new File("C:/Users/Usuario/Documents/NetBeansProjects/TFG/src/main/webapp/resources/Imagenes/i.jpg");
