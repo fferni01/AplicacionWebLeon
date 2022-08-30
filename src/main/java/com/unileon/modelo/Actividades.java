@@ -30,11 +30,13 @@ public class Actividades implements Serializable {
     @Column(name = "Titulo")
     private String Titulo;
     @Column(name = "Precio")
-    private double Precio;
+    private String Precio;
     @Column(name = "Url")
     private String Url;
     @Column(name = "Direccion")
     private String Direccion;
+    @Column(name = "Tipo")
+    private String Tipo;
     @Lob
     @Column(name = "Imagen")
     private byte[] Imagen;
@@ -55,11 +57,11 @@ public class Actividades implements Serializable {
         this.Titulo = Titulo;
     }
 
-    public double getPrecio() {
+    public String getPrecio() {
         return Precio;
     }
 
-    public void setPrecio(double Precio) {
+    public void setPrecio(String Precio) {
         this.Precio = Precio;
     }
 
@@ -87,15 +89,24 @@ public class Actividades implements Serializable {
         this.Imagen = Imagen;
     }
 
+    public String getTipo() {
+        return Tipo;
+    }
+
+    public void setTipo(String Tipo) {
+        this.Tipo = Tipo;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + this.idActividad;
-        hash = 67 * hash + Objects.hashCode(this.Titulo);
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.Precio) ^ (Double.doubleToLongBits(this.Precio) >>> 32));
-        hash = 67 * hash + Objects.hashCode(this.Url);
-        hash = 67 * hash + Objects.hashCode(this.Direccion);
-        hash = 67 * hash + Arrays.hashCode(this.Imagen);
+        int hash = 3;
+        hash = 73 * hash + this.idActividad;
+        hash = 73 * hash + Objects.hashCode(this.Titulo);
+        hash = 73 * hash + Objects.hashCode(this.Precio);
+        hash = 73 * hash + Objects.hashCode(this.Url);
+        hash = 73 * hash + Objects.hashCode(this.Direccion);
+        hash = 73 * hash + Objects.hashCode(this.Tipo);
+        hash = 73 * hash + Arrays.hashCode(this.Imagen);
         return hash;
     }
 
@@ -114,10 +125,10 @@ public class Actividades implements Serializable {
         if (this.idActividad != other.idActividad) {
             return false;
         }
-        if (Double.doubleToLongBits(this.Precio) != Double.doubleToLongBits(other.Precio)) {
+        if (!Objects.equals(this.Titulo, other.Titulo)) {
             return false;
         }
-        if (!Objects.equals(this.Titulo, other.Titulo)) {
+        if (!Objects.equals(this.Precio, other.Precio)) {
             return false;
         }
         if (!Objects.equals(this.Url, other.Url)) {
@@ -126,10 +137,17 @@ public class Actividades implements Serializable {
         if (!Objects.equals(this.Direccion, other.Direccion)) {
             return false;
         }
+        if (!Objects.equals(this.Tipo, other.Tipo)) {
+            return false;
+        }
         if (!Arrays.equals(this.Imagen, other.Imagen)) {
             return false;
         }
         return true;
     }
+
+    
+
+    
 
 }

@@ -62,12 +62,21 @@ public class Noticia implements Serializable{
         this.imagen = imagen;
     }
 
+    public Date getFecha() {
+        return Fecha;
+    }
+
+    public void setFecha(Date Fecha) {
+        this.Fecha = Fecha;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.idNoticia;
-        hash = 97 * hash + Objects.hashCode(this.Titulo);
-        hash = 97 * hash + Arrays.hashCode(this.imagen);
+        int hash = 7;
+        hash = 37 * hash + this.idNoticia;
+        hash = 37 * hash + Objects.hashCode(this.Titulo);
+        hash = 37 * hash + Objects.hashCode(this.Fecha);
+        hash = 37 * hash + Arrays.hashCode(this.imagen);
         return hash;
     }
 
@@ -89,12 +98,16 @@ public class Noticia implements Serializable{
         if (!Objects.equals(this.Titulo, other.Titulo)) {
             return false;
         }
+        if (!Objects.equals(this.Fecha, other.Fecha)) {
+            return false;
+        }
         if (!Arrays.equals(this.imagen, other.imagen)) {
             return false;
         }
         return true;
     }
 
+  
     
     
 }

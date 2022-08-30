@@ -1,10 +1,48 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../WEB-INF/Template/Template.xhtml">
+                template="./../../WEB-INF/Template/SesionIniciada.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        content
+         <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+        </p:messages>
+         <h:form id="frmPrincipal">
+            <p:fieldset legend="Datos Personales">
+                <h:panelGrid id="pgDatospersonales" columns="3"  styleClass="ui-noborder" cellpadding="3" >
+                    <p:outputLabel value="Nombre:" for="@next"/>
+                    <p:inputText value="#{perfilController.usuario.nombre}"  required ="true" requiredMessage="Nombre es un campo obligatorio"/>
+                    <p:message for="@previous"/>
+
+                    <p:outputLabel value="Apellido:" for="@next"/>
+                    <p:inputText value="#{perfilController.usuario.apellido}" required="true" requiredMessage="El primer apellido es un campo obligatorio"/>
+                    <p:message for="@previous"/>
+                    
+                    <p:outputLabel value="email" for="@next"/>
+                    <p:inputText value="#{perfilController.usuario.email}"/>
+                    <p:message for="@previous"/>
+                    
+                </h:panelGrid>
+                <p:commandButton value="Modificar" action="#{perfilController.modificar()}" update="frmPrincipal"/>
+            </p:fieldset>
+             </h:form>
+
+             <h:form id="frmContraseña">
+             <p:fieldset legend="Cambiar Contraseña">
+                  <h:panelGrid id="otro" columns="3"  styleClass="ui-noborder" cellpadding="3" >
+                    <p:outputLabel value="Cambiar Contraseña:" for="@next"/>
+                    <p:password value="#{perfilController.password}" id ="password1" required="true" feedback="true" match="password2" promptLabel="Introduzca contraseña" strongLabel="Clave muy segura" weakLabel="Clave insegura"/>
+                    <p:message for="@previous"/>
+                    <p:outputLabel value="Repita nueva Contraseña:" for="@next"/>
+                    <p:password id="password2" required="true" requiredMessage="Es obligatorio repetir contraseña"/>
+                    <p:message for="@previous"/>
+                    <p:commandButton value="Cambiar contraseña" action="#{perfilController.modificarContraseniaUsuario()}"/>
+                </h:panelGrid>
+             </p:fieldset>
+            </h:form>
     </ui:define>
 
 </ui:composition>

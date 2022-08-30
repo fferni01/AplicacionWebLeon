@@ -27,6 +27,5 @@ public class PlantillaController implements Serializable{
         if(us==null){
         FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
         }
-        
     }
 }

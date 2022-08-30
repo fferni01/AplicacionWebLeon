@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/Template/Template.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content" >
+
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true">
+                <p:autoUpdate />
+            </p:growl>
+            
+            <p:dataScroller  value="#{avisosController.avisos}" var="aviso" chunkSize="10" >
+                <f:facet name="header">
+                    Avisos
+                    <p:commandButton value="Crear Aviso" action="/Public/IniciarSesion.xhtml" update=":form:avisocrear" style="float:right;margin-top:-10px " rendered="#{avisosController.crearIniciarSesion()}"/>
+                    <p:commandButton value="Crear Aviso" action="#{avisosController.limpiar()}" update=":form:avisocrear" onclick="PF('cav').show();" style="float:right;margin-top:-10px " rendered="#{avisosController.crearNormal()}"/>
+                </f:facet>
+                
+            
+                <p:card style=" margin-bottom: 2em;" >
+                    <f:facet name="title">
+                        #{aviso.asunto}
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{aviso.usuario.nombre} #{aviso.usuario.apellido}
+                    </f:facet>
+
+                    <p style=" word-wrap: break-word;">#{aviso.descripcion}</p>
+
+                   
+                    <p:menuButton  icon="pi pi-ellipsis-v" rendered="#{avisosController.CompruebaUsuario(aviso)}" style="float: right">
+                        <p:menuitem value="Editar" id="btn"  icon="pi pi-file" update=":form:avisoDetail" action="#{avisosController.setAviso(aviso)}" onclick="PF('dlg').show();"/>
+                        <p:menuitem value="borrar"  ajax="false" action="#{avisosController.eliminar(aviso)}"  update=":form:avisoDetail" icon="pi pi-trash"/>
+                    </p:menuButton>
+
+                    <f:facet name="footer">
+                        #{avisosController.fechaProcesada(aviso.fecha)} 
+                    </f:facet>
+                </p:card>
+                
+                
+            </p:dataScroller>
+
+
+            <p:dialog header="Modificar Aviso" widgetVar="dlg"  height="400" modal="true">
+                <p:fieldset  legend="Aviso">
+                    <h:panelGrid id="avisoDetail" columns="2"  styleClass="ui-noborder" cellpadding="3" >
+                        <p:outputLabel value="Asunto" for="@next"/>
+                          <p:inputText value="#{avisosController.aviso.asunto}" />
+                      
+
+                        <p:outputLabel value="Descripcion" for="@next"/>
+                          <p:inputTextarea rows="7" cols="20" value="#{avisosController.aviso.descripcion}" />
+                       
+                    </h:panelGrid>
+                    <p:commandButton value="Modificar" action="#{avisosController.modificar()}" update="form"/>
+                </p:fieldset>
+              
+            </p:dialog>
+            <p:dialog header="Crear Aviso" widgetVar="cav"  height="400" modal="true">
+                <p:fieldset  legend="Crear">
+                    <h:panelGrid id="avisocrear" columns="2"  styleClass="ui-noborder" cellpadding="3" >
+                        <p:outputLabel value="Asunto" for="@next"/>
+                        <p:inputText value="#{avisosController.avisoN.asunto}"/>
+                        
+
+                          <p:outputLabel value="Descripcion" for="@next"/>
+                          <p:inputTextarea rows="7" cols="20" value="#{avisosController.avisoN.descripcion}"/>
+                        
+                   
+                    </h:panelGrid>
+                     <p:commandButton value="Crear" action="#{avisosController.crear()}" update="form"/>
+                </p:fieldset>
+              
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

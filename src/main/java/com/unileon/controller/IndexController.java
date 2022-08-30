@@ -8,8 +8,6 @@ package com.unileon.controller;
 
 
 import com.unileon.EJB.NoticiaFacadeLocal;
-import com.unileon.WebScraping.InsertarNoticiasBD;
-import com.unileon.WebScraping.beepClock;
 import com.unileon.controller.prueba.NoticiaP;
 import com.unileon.modelo.Noticia;
 import java.io.File;
@@ -20,11 +18,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
@@ -37,7 +30,7 @@ import org.primefaces.model.ResponsiveOption;
  * @author Usuario
  */
 @Named
-@ViewScoped
+@ViewScoped ///mayby applicationScoped
 public class IndexController implements Serializable{
      private List<ResponsiveOption> responsiveOptions;
      private List<NoticiaP> lista;
@@ -49,32 +42,15 @@ public class IndexController implements Serializable{
      
      @PostConstruct
     public void init() {
-        /* try {
-             //BeepClock();
 
-           //  creaNoticia();
-         } catch (IOException ex) {
-             Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-         }*/
-     
         rellenaLista();
-         System.out.println(lista.get(0).getName());
+        System.out.println(lista.get(0).getName());
         responsiveOptions = new ArrayList<>();
         responsiveOptions.add(new ResponsiveOption("1400px", 3, 3));
         responsiveOptions.add(new ResponsiveOption("1100px", 2, 2));
         responsiveOptions.add(new ResponsiveOption("750px", 1, 1));
     }
 
-     /*void BeepClock() {
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
-        Runnable task = new beepClock();
-        int initialDelay = 1000000;
-        int periodicDelay = 1000000;
-        scheduler.scheduleAtFixedRate(task, initialDelay, periodicDelay,
-                TimeUnit.SECONDS
-        );
-    }*/
     public List<NoticiaP> getLista() {
         return lista;
     }

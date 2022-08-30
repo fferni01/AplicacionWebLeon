@@ -5,6 +5,7 @@
  */
 package com.unileon.modelo;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
@@ -15,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -32,8 +35,10 @@ public class Rutas implements Serializable{
     private String Url;
     @Column(name = "Distancia")
     private Double Distancia;
-    @Column(name = "Tiempo")
-    private String Tiempo;
+    @Column(name = "Direccion")
+    private String Direccion;
+    @Column(name = "Imagensrc")
+    private String Imagensrc;
     @Lob
     @Column(name = "Imagen")
     private byte[] Imagen;
@@ -70,12 +75,12 @@ public class Rutas implements Serializable{
         this.Distancia = Distancia;
     }
 
-    public String getTiempo() {
-        return Tiempo;
+    public String getDireccion() {
+        return Direccion;
     }
 
-    public void setTiempo(String Tiempo) {
-        this.Tiempo = Tiempo;
+    public void setDireccion(String Direccion) {
+        this.Direccion = Direccion;
     }
 
     public byte[] getImagen() {
@@ -86,15 +91,24 @@ public class Rutas implements Serializable{
         this.Imagen = Imagen;
     }
 
+    public String getImagensrc() {
+        return Imagensrc;
+    }
+
+    public void setImagensrc(String Imagensrc) {
+        this.Imagensrc = Imagensrc;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + this.idRuta;
-        hash = 89 * hash + Objects.hashCode(this.Titulo);
-        hash = 89 * hash + Objects.hashCode(this.Url);
-        hash = 89 * hash + Objects.hashCode(this.Distancia);
-        hash = 89 * hash + Objects.hashCode(this.Tiempo);
-        hash = 89 * hash + Arrays.hashCode(this.Imagen);
+        int hash = 7;
+        hash = 79 * hash + this.idRuta;
+        hash = 79 * hash + Objects.hashCode(this.Titulo);
+        hash = 79 * hash + Objects.hashCode(this.Url);
+        hash = 79 * hash + Objects.hashCode(this.Distancia);
+        hash = 79 * hash + Objects.hashCode(this.Direccion);
+        hash = 79 * hash + Objects.hashCode(this.Imagensrc);
+        hash = 79 * hash + Arrays.hashCode(this.Imagen);
         return hash;
     }
 
@@ -119,7 +133,10 @@ public class Rutas implements Serializable{
         if (!Objects.equals(this.Url, other.Url)) {
             return false;
         }
-        if (!Objects.equals(this.Tiempo, other.Tiempo)) {
+        if (!Objects.equals(this.Direccion, other.Direccion)) {
+            return false;
+        }
+        if (!Objects.equals(this.Imagensrc, other.Imagensrc)) {
             return false;
         }
         if (!Objects.equals(this.Distancia, other.Distancia)) {
@@ -130,5 +147,10 @@ public class Rutas implements Serializable{
         }
         return true;
     }
+
+   
+    
+  
+    
     
 }

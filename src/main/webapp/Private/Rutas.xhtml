@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/Template/SesionIniciada.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"> 
+
+
+
+
+
+    <ui:define name="content">
+
+        <h:form id="form">
+
+            <p:growl id="growl" showDetail="true">
+                <p:autoUpdate />
+            </p:growl>
+
+            <p:dataGrid id="dataGrid" var="ruta" value="#{rutasController.rutas}" columns="4" layout="grid"
+                        rows="8" paginator="true" 
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                        rowsPerPageTemplate="8,12,16">
+
+
+
+                <p:card style="height:  472px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(ruta)}"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{ruta.titulo}
+                        <p:outputLabel rendered="#{rutasController.espacio(ruta)}" style="color: #ffffff" value="dddddddddddddddddddddddf "/>
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{ruta.direccion}        
+
+                    </f:facet>
+
+
+
+                    <h:outputLink  value="#{ruta.url}">Ver más  </h:outputLink>
+                    <p:commandButton rendered="#{!rutasController.compruebaFav(ruta)}" update=":form:Fav" onclick="PF('dlg').show();" action="#{rutasController.setRuta(ruta)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
+                    <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" rendered="#{rutasController.compruebaFav(ruta)}" onclick="PF('dlg2').show();" action="#{rutasController.setRuta(ruta)}" />
+                    <p:commandButton icon="pi pi-comments" styleClass="rounded-button ui-button-flat" update=":form:a" onclick="PF('com').show();" action="#{rutasController.crearListaComentarios(ruta)}" />
+
+                </p:card>
+
+
+
+
+
+            </p:dataGrid>
+
+
+            <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
+                <p:card id ="Fav" style="height:  492px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(rutasController.ruta)}"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{rutasController.ruta.titulo}
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{rutasController.ruta.direccion}        
+
+                    </f:facet>
+                    <f:facet name="footer">
+                        <p:commandButton style="float: right" value="Añadir a Favoritos" action="#{rutasController.aniadirFav()}" update="form" />   
+
+                    </f:facet>
+
+                </p:card>
+            </p:dialog>
+
+            <p:dialog header="Eliminar de favoritos" widgetVar="dlg2"  modal="true">
+                <p:card id ="Fav2" style="height:  492px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(rutasController.ruta)}"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{rutasController.ruta.titulo}
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{rutasController.ruta.direccion}        
+
+                    </f:facet>
+                    <f:facet name="footer" >
+                        <p:commandButton value="Eliminar de Favoritos" action="#{rutasController.eliminarFav()}" update="form" />   
+
+                    </f:facet>
+
+                </p:card>
+            </p:dialog>
+
+            <p:dialog  header="Comentarios" widgetVar="com" modal="true">
+                <p:outputPanel id="a">
+                    <p:scrollPanel style="width: auto; height: 500px" mode="native">
+                        <div>
+                            <p:inputTextarea value="#{rutasController.comentario.comentario}" placeholder="añadir un comentario..." rows="1" style="width: 100%" />
+                            <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{rutasController.crearComentario()}" value="Comentar" update=":form:a" />   
+                        </div>       
+                        <p:dataScroller value="#{rutasController.comentarios}" var="comentario" rendered="#{rutasController.existenComentarios()}">
+
+                            <h5>#{comentario.usuario.nombre} #{comentario.usuario.apellido}</h5>
+
+
+                            <p style="word-wrap: break-word;">#{comentario.comentario}</p>
+
+
+                            <p:menuButton style="margin-left: 88%" icon="pi pi-ellipsis-v">
+                                <p:menuitem value="Editar" icon="pi pi-file" update=":form:modcom" action="#{rutasController.setComentario(comentario)}" onclick="PF('modcom').show();"/>
+                                <p:menuitem  value="borrar"  icon="pi pi-trash" update=":form:a" ajax="false" action="#{rutasController.eliminarCom(comentario)}"/>
+                            </p:menuButton>
+
+
+
+                            <p:divider />
+                        </p:dataScroller>
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
+
+            <p:dialog  header="Modificar" widgetVar="modcom" modal="true">
+                <p:outputPanel id="modcom">
+                    <p:scrollPanel style="width: auto;" mode="native">
+                        <div>
+                            <p:inputTextarea value="#{rutasController.comentario.comentario}" rows="1" style="width: 100%" />
+                            <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{rutasController.modificarCom()}" value="Modificar" onclick="PF('modcom').hide();" update=":form:a" />   
+                        </div>       
+
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

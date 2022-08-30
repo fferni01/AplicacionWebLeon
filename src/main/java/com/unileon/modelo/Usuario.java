@@ -6,13 +6,17 @@
 package com.unileon.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -36,8 +40,12 @@ public class Usuario implements Serializable {
     private String apellido;
     @Column(name = "email")
     private String email;
-@Column(name = "tipo")
+    @Column(name = "tipo")
     private int tipo;
+    @Column(name = "FechaAcceso")
+    @Temporal(TemporalType.DATE)
+    private Date FechaAcceso;
+   
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -94,16 +102,25 @@ public class Usuario implements Serializable {
         this.tipo = tipo;
     }
 
+    public Date getFechaAcceso() {
+        return FechaAcceso;
+    }
+
+    public void setFechaAcceso(Date FechaAcceso) {
+        this.FechaAcceso = FechaAcceso;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.idUsuario;
-        hash = 97 * hash + Objects.hashCode(this.usuario);
-        hash = 97 * hash + Objects.hashCode(this.password);
-        hash = 97 * hash + Objects.hashCode(this.nombre);
-        hash = 97 * hash + Objects.hashCode(this.apellido);
-        hash = 97 * hash + Objects.hashCode(this.email);
-        hash = 97 * hash + this.tipo;
+        int hash = 7;
+        hash = 89 * hash + this.idUsuario;
+        hash = 89 * hash + Objects.hashCode(this.usuario);
+        hash = 89 * hash + Objects.hashCode(this.password);
+        hash = 89 * hash + Objects.hashCode(this.nombre);
+        hash = 89 * hash + Objects.hashCode(this.apellido);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + this.tipo;
+        hash = 89 * hash + Objects.hashCode(this.FechaAcceso);
         return hash;
     }
 
@@ -140,8 +157,13 @@ public class Usuario implements Serializable {
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }
+        if (!Objects.equals(this.FechaAcceso, other.FechaAcceso)) {
+            return false;
+        }
         return true;
     }
+
+    
 
  
 

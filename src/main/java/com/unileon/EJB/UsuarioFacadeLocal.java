@@ -31,5 +31,7 @@ public interface UsuarioFacadeLocal {
     int count();
 
     public Usuario consultarUsuario(Usuario usuario);
+
+    public List<Usuario> obtenUsuariosN();
     
 }

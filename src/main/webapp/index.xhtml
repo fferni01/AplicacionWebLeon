@@ -2,9 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
+
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="/css/default.css"/>
@@ -12,124 +11,37 @@
         <h:outputStylesheet name="/css/carrusel.css"/>
         <title>Facelets Template</title>
     </h:head>
+
     <h:body>
-        <div id="top">
-            <h:form>
-                <p:sidebar widgetVar="sidebar1" showCloseIcon="false">
-                    <p:commandButton icon="pi pi-bars" type="button" onclick="PF('sidebar1').hide()" styleClass="p-mr-2" style="margin-left: -10px; margin-top:-20px  "/>
-                    <h3>León</h3>
-                    <p:commandButton action="Public/Noticias.xhtml" value="Noticias" styleClass="ui-button-flat" icon="pi pi-book" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                    <br></br>
-                    <p:commandButton value="Eventos" styleClass="ui-button-flat" icon="pi pi-ticket" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px" />
-                    <br></br>
-                    <p:commandButton value="Museos"  styleClass="ui-button-flat" icon="pi pi-home" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                    <h3>Perfil</h3>
-                    <p:commandButton value="Mi perfil" styleClass="ui-button-flat" icon="pi pi-user" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px" />
-                </p:sidebar>
-                <p:toolbar id="tb">
-                    <f:facet name="left">
-                        <p:commandButton icon="pi pi-bars" type="button" onclick="PF('sidebar1').show()" styleClass="p-mr-2" />
-                    </f:facet>
-                    <f:facet name="right">
-                        <p:commandButton icon="pi pi-star WhiteBlue Fs50" iconPos="left" style="float: right; margin: 0px 5px 0px 0px;"  />
-                        <p:commandButton action="Public/IniciarSesion.xhtml" value="Iniciar sesion" icon="pi pi-user" iconPos="left" style="float: right"/>
-                    </f:facet>
-                </p:toolbar>
-
-                 <p:sticky target="tb"/>
-
-            </h:form>
-        </div>
-
         <div id="content" class="center_content">
-            <h:form>
-                <div class="card">
-                    <p:carousel value="#{indexController.lista}" var="product" numVisible="4" numScroll="4"
-                                responsiveOptions="#{indexController.responsiveOptions}">
-                        <f:facet name="header">
+         <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+        </p:messages>
+            <div style="display:flex;
+    justify-content:center;
+    align-items: flex-start;
+       height: 100vh;
+       margin-top: 200px">
 
-                            <h3 style="margin-left: 70px">Noticias</h3>
-                        </f:facet>
-
-                        <div class="product-item">
-                            <div class="product-item-content">
-                                <div class="x">
-                                <img alt="user header" src="#{product.imagen}" class="product-image"/>
-                                </div>
-                                <p class="textN"> #{product.name}</p>
-
-                            </div>
+        <h:form>
+        <p:fieldset legend="Iniciar Sesion" style="width: 100%"  >
+           
+                <p:panelGrid columns="2"  styleClass="ui-noborder">
+                    <p:outputLabel value="Nombre de usuario" for="@next"/>
+                    <p:inputText value="#{iniciarSesionController.usuario.usuario}"/>
+                    
+                    <p:outputLabel value="Contraseña" for="@next"/>
+                    <p:password value="#{iniciarSesionController.usuario.password}"/>
+                     
+                    <p:commandButton value="Iniciar sesión" action="#{iniciarSesionController.verificarUsuario()}"/>
+                    <p:commandButton action="/Public/Registrarse.xhtml" value="Registrarse"  />
+                </p:panelGrid>
+            
+        </p:fieldset>
+            
+        </h:form>
                         </div>
-                    </p:carousel>
-                </div>
-                
-                <div class="card">
-                    <p:carousel value="#{indexController.museos}" var="product" numVisible="4" numScroll="4"
-                                responsiveOptions="#{indexController.responsiveOptions}">
-                        <f:facet name="header">
-
-                            <h3 style="margin-left: 70px">Museos</h3>
-                        </f:facet>
-
-                        <div class="product-item">
-                            <div class="product-item-content">
-                                <div class="x">
-                                    <img alt="user header" src="#{product.imagen}" class="product-image"/>
-                                </div>
-                                 <p class="text"> #{product.name}</p>
-                               
-
-                            </div>
-                        </div>
-                    </p:carousel>
-                </div>
-                <div class="card">
-                    <p:carousel value="#{indexController.eventos}" var="product" numVisible="4" numScroll="4"
-                                responsiveOptions="#{indexController.responsiveOptions}">
-                        <f:facet name="header">
-
-                            <h3 style="margin-left: 70px">Eventos</h3>
-                        </f:facet>
-
-                        <div class="product-item">
-                            <div class="product-item-content">
-                                
-                                <div class="x">
-                                    <img alt="user header" src="#{product.imagen}" class="product-image"/>
-                                </div>
-                                <p class="text"> #{product.name}</p>
-
-                            </div>
-                        </div>
-                    </p:carousel>
-                </div>
-                
-                <!--div class="card">
-                    <p:carousel valuindexControllerrolle.museos}" var="product" numVisible="3" numScroll="3"
-                                responsiveOptionsindexControllerolle.responsiveOptions}">
-
-                        <f:facet name="header">
-                            <h3 style="margin-left: 70px">Museos</h3>
-                        </f:facet>
-
-                        <p:card style="height: 500px; margin:10px" >
-                            <f:facet name="header">
-                                <div class="product-item">
-                                    <div class="p-mb-3">
-                                        <p:graphicImage url="#{product.imagen}" styleClass="product-image"/>
-                                    </div>
-                                </div>
-                            </f:facet>
-                            <h2 style="text-align:center ">#{product.name}</h2>
-                        </p:card> 
-                    </p:carousel>
-                </div-->
-
-            </h:form>
-
-        </div>
-
-
+    </div>
     </h:body>
 
 </html>

@@ -31,8 +31,9 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public UsuarioFacade() {
         super(Usuario.class);
     }
-     @Override
-    public Usuario consultarUsuario(Usuario us){
+    
+    @Override
+     public Usuario consultarUsuario(Usuario us){
         Usuario usDevuelto = new Usuario();
          
         String consultaJPQL = "FROM Usuario u WHERE u.usuario=:param1 and u.password=:param2";
@@ -50,5 +51,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usDevuelto);
         return(usDevuelto);
+     }
+    
+     public List<Usuario> obtenUsuariosN(){
+         Usuario usDevuelto = new Usuario();
+         
+        String consultaJPQL = "FROM Usuario u WHERE u.tipo=:param1";
+        Query query = em.createQuery(consultaJPQL);
+        query.setParameter("param1", 0);
+        List<Usuario> resultado = query.getResultList();
+
+      
+        return(resultado);
      }
 }

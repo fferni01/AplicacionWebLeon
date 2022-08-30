@@ -66,11 +66,11 @@ and open the template in the editor.
     }
     
      .ui-sticky {
-        top: 5px !important;
+        top: 5px;
     }
 
     @media (max-width: 960px) {
         .ui-sticky {
-            top: 5px !important;
+            top: 5px ;
         }
     }

@@ -40,16 +40,16 @@ public class Eventos implements Serializable {
     private String Direccion;
     @Column(name = "Tipo")
     private String Tipo;
-
+    @Column(name = "Fecha")
+    private String Fecha;
     @Lob
     @Column(name = "Imagen")
     private byte[] Imagen;
     @Column(name = "Hora")
-    @Temporal(TemporalType.TIME)
-    private Date Hora;
-    @Column(name = "Fecha")
+    private String Hora;
+    @Column(name = "FechaFin")
     @Temporal(TemporalType.DATE)
-    private Date Fecha;
+    private Date FechaFin;
 
     public int getIdEvento() {
         return idEvento;
@@ -99,6 +99,14 @@ public class Eventos implements Serializable {
         this.Tipo = Tipo;
     }
 
+    public String getFecha() {
+        return Fecha;
+    }
+
+    public void setFecha(String Fecha) {
+        this.Fecha = Fecha;
+    }
+
     public byte[] getImagen() {
         return Imagen;
     }
@@ -107,34 +115,35 @@ public class Eventos implements Serializable {
         this.Imagen = Imagen;
     }
 
-    public Date getHora() {
+    public String getHora() {
         return Hora;
     }
 
-    public void setHora(Date Hora) {
+    public void setHora(String Hora) {
         this.Hora = Hora;
     }
 
-    public Date getFecha() {
-        return Fecha;
+    public Date getFechaFin() {
+        return FechaFin;
     }
 
-    public void setFecha(Date Fecha) {
-        this.Fecha = Fecha;
+    public void setFechaFin(Date FechaFin) {
+        this.FechaFin = FechaFin;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 67 * hash + this.idEvento;
-        hash = 67 * hash + Objects.hashCode(this.Nombre);
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.Url) ^ (Double.doubleToLongBits(this.Url) >>> 32));
-        hash = 67 * hash + Objects.hashCode(this.Precio);
-        hash = 67 * hash + Objects.hashCode(this.Direccion);
-        hash = 67 * hash + Objects.hashCode(this.Tipo);
-        hash = 67 * hash + Arrays.hashCode(this.Imagen);
-        hash = 67 * hash + Objects.hashCode(this.Hora);
-        hash = 67 * hash + Objects.hashCode(this.Fecha);
+        hash = 53 * hash + this.idEvento;
+        hash = 53 * hash + Objects.hashCode(this.Nombre);
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.Url) ^ (Double.doubleToLongBits(this.Url) >>> 32));
+        hash = 53 * hash + Objects.hashCode(this.Precio);
+        hash = 53 * hash + Objects.hashCode(this.Direccion);
+        hash = 53 * hash + Objects.hashCode(this.Tipo);
+        hash = 53 * hash + Objects.hashCode(this.Fecha);
+        hash = 53 * hash + Arrays.hashCode(this.Imagen);
+        hash = 53 * hash + Objects.hashCode(this.Hora);
+        hash = 53 * hash + Objects.hashCode(this.FechaFin);
         return hash;
     }
 
@@ -168,17 +177,22 @@ public class Eventos implements Serializable {
         if (!Objects.equals(this.Tipo, other.Tipo)) {
             return false;
         }
-        if (!Arrays.equals(this.Imagen, other.Imagen)) {
+        if (!Objects.equals(this.Fecha, other.Fecha)) {
             return false;
         }
         if (!Objects.equals(this.Hora, other.Hora)) {
             return false;
         }
-        if (!Objects.equals(this.Fecha, other.Fecha)) {
+        if (!Arrays.equals(this.Imagen, other.Imagen)) {
+            return false;
+        }
+        if (!Objects.equals(this.FechaFin, other.FechaFin)) {
             return false;
         }
         return true;
     }
+
+    
     
     
 }

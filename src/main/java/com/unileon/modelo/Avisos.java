@@ -33,7 +33,7 @@ public class Avisos implements Serializable {
     private int idAviso;
     @Column(name = "Asunto")
     private String Asunto;
-    @Column(name = "Descipcion")
+    @Column(name = "Descripcion")
     private String Descripcion;
     @Column(name = "Fecha")
     @Temporal(TemporalType.DATE)

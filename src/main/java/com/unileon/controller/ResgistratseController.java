@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -25,7 +26,7 @@ import javax.inject.Named;
 public class ResgistratseController implements Serializable{
     
     private Usuario usuario;
-    
+     UploadedFile file;
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
     
@@ -67,4 +68,6 @@ public class ResgistratseController implements Serializable{
         }
         return false;
     }
+    
+  
 }
