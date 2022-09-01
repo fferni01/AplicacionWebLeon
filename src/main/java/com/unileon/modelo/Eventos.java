@@ -33,7 +33,7 @@ public class Eventos implements Serializable {
     @Column(name = "Nombre")
     private String Nombre;
     @Column(name = "Url")
-    private double Url;
+    private String Url;
     @Column(name = "Precio")
     private String Precio;
     @Column(name = "Direccion")
@@ -67,11 +67,11 @@ public class Eventos implements Serializable {
         this.Nombre = Nombre;
     }
 
-    public double getUrl() {
+    public String getUrl() {
         return Url;
     }
 
-    public void setUrl(double Url) {
+    public void setUrl(String Url) {
         this.Url = Url;
     }
 
@@ -136,7 +136,7 @@ public class Eventos implements Serializable {
         int hash = 3;
         hash = 53 * hash + this.idEvento;
         hash = 53 * hash + Objects.hashCode(this.Nombre);
-        hash = 53 * hash + (int) (Double.doubleToLongBits(this.Url) ^ (Double.doubleToLongBits(this.Url) >>> 32));
+        hash = 53 * hash + Objects.hashCode(this.Url);
         hash = 53 * hash + Objects.hashCode(this.Precio);
         hash = 53 * hash + Objects.hashCode(this.Direccion);
         hash = 53 * hash + Objects.hashCode(this.Tipo);
@@ -162,10 +162,10 @@ public class Eventos implements Serializable {
         if (this.idEvento != other.idEvento) {
             return false;
         }
-        if (Double.doubleToLongBits(this.Url) != Double.doubleToLongBits(other.Url)) {
+        if (!Objects.equals(this.Nombre, other.Nombre)) {
             return false;
         }
-        if (!Objects.equals(this.Nombre, other.Nombre)) {
+        if (!Objects.equals(this.Url, other.Url)) {
             return false;
         }
         if (!Objects.equals(this.Precio, other.Precio)) {
@@ -191,6 +191,8 @@ public class Eventos implements Serializable {
         }
         return true;
     }
+
+    
 
     
     

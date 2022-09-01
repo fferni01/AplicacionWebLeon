@@ -6,9 +6,12 @@
 package com.unileon.EJB;
 
 import com.unileon.modelo.Cuerponoticia;
+import com.unileon.modelo.Noticia;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +31,5 @@ public class CuerponoticiaFacade extends AbstractFacade<Cuerponoticia> implement
     public CuerponoticiaFacade() {
         super(Cuerponoticia.class);
     }
-    
+
 }

@@ -31,5 +31,9 @@ public interface ActividadesFacadeLocal {
     int count();
 
     public boolean noExiste(Actividades Actividad);
+
+    public List<Actividades> obtentipo(String rutas_Guiadas_León);
+
+    
     
 }

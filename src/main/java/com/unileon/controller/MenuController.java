@@ -83,4 +83,7 @@ public class MenuController implements Serializable{
     public String entrarPerfilAdm(){
             return "/Private/Admin/MiPerfil.xhtml?faces-redirect=true";
     }
+    public String entrarFav(){
+            return "/Private/Usuario/Favoritos.xhtml?faces-redirect=true";
+    }
 }

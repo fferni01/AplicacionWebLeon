@@ -116,10 +116,9 @@
                             <p style="word-wrap: break-word;">#{comentario.comentario}</p>
 
 
-                            <p:menuButton style="margin-left: 88%" icon="pi pi-ellipsis-v">
-                                <p:menuitem value="Editar" icon="pi pi-file" update=":form:modcom" action="#{rutasController.setComentario(comentario)}" onclick="PF('modcom').show();"/>
-                                <p:menuitem  value="borrar"  icon="pi pi-trash" update=":form:a" ajax="false" action="#{rutasController.eliminarCom(comentario)}"/>
-                            </p:menuButton>
+                             <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" ajax="false" action="#{favoritosController.eliminarCom(comentario)}" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+
 
 
 

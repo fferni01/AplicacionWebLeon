@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../WEB-INF/Template/SesionIniciada.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form">
+
+            <p:growl id="growl" showDetail="true">
+                <p:autoUpdate />
+            </p:growl>
+
+            <p:dataGrid id="dataGrid" var="fav" value="#{favoritosController.favoritosUsuario}" columns="4" layout="grid"
+                        rows="8" paginator="true" 
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                        rowsPerPageTemplate="8,12,16">
+
+
+
+                <p:card style="height:  472px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{favoritosController.obtenFav(fav)}"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{favoritosController.obtenNombre(fav)}
+                        <p:outputLabel rendered="#{favoritosController.espacio(fav)}" style="color: #ffffff" value="dddddddddddddddddddddddf "/>
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{favoritosController.obtenDireccion(fav)}        
+
+                    </f:facet>
+
+
+                    <h:outputLink  value="#{favoritosController.obtenUrl(fav)}">Ver más  </h:outputLink>      
+                    <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" onclick="PF('dlg2').show();" action="#{favoritosController.setFav(fav)}" />
+                    <p:commandButton icon="pi pi-comments" styleClass="rounded-button ui-button-flat" update=":form:a" onclick="PF('com').show();" action="#{favoritosController.crearListaComentarios(fav)}" />
+
+                </p:card>
+            </p:dataGrid>
+
+            <p:dialog header="Eliminar de favoritos" widgetVar="dlg2"  modal="true">
+                <p:card id ="Fav2" style="height:  492px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{favoritosController.obtenFav()}"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{favoritosController.obtenNombre()}
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{favoritosController.obtenDireccion()}         
+
+                    </f:facet>
+                    <f:facet name="footer" >
+                        <p:commandButton value="Eliminar de Favoritos" action="#{favoritosController.eliminarFav()}" update="form" />   
+
+                    </f:facet>
+
+                </p:card>
+            </p:dialog>
+            <p:dialog  header="Comentarios" widgetVar="com" modal="true" style="width: 80%">
+                <p:outputPanel id="a" >
+
+                    <div>
+                        <p:inputTextarea value="#{favoritosController.comentar}" placeholder="añadir un comentario..." rows="1" style="width: 100%" />
+                        <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{favoritosController.crearComentario()}" value="Comentar" update=":form:a" />   
+                    </div>    
+                    <p:scrollPanel style="width: 452px; margin: 12px;height: 500px" mode="native">
+                        <p:dataScroller value="#{favoritosController.comentarios}" var="comentario" rendered="#{favoritosController.existenComentarios()}">
+                            <h:panelGrid id="grid" cellpadding="7" columns="1" styleClass="mb-3">
+
+                                <h4>#{comentario.usuario.nombre} #{comentario.usuario.apellido}</h4>
+                                <p:outputLabel style="word-wrap: break-word;margin-right: 50px;margin-left: 5px" value="#{comentario.comentario}"/>
+                            </h:panelGrid> 
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" ajax="false" action="#{favoritosController.eliminarCom(comentario)}" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+
+
+
+                            <p:divider />
+
+                        </p:dataScroller>
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
+
+            <p:dialog  header="Modificar" widgetVar="modcom" modal="true">
+                <p:outputPanel id="modcom">
+                    <p:scrollPanel style="width: auto;" mode="native">
+                        <div>
+                            <p:inputTextarea value="#{favoritosController.comentario.comentario}" rows="1" style="width: 100%" />
+                            <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{favoritosController.modificarCom()}" value="Modificar" onclick="PF('modcom').hide();" update=":form:a" />   
+                        </div>       
+
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

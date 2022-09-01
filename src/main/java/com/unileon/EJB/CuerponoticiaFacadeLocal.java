@@ -6,6 +6,7 @@
 package com.unileon.EJB;
 
 import com.unileon.modelo.Cuerponoticia;
+import com.unileon.modelo.Noticia;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,8 @@ public interface CuerponoticiaFacadeLocal {
     List<Cuerponoticia> findRange(int[] range);
 
     int count();
+
+    
+    
     
 }

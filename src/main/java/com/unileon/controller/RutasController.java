@@ -97,8 +97,10 @@ public class RutasController implements Serializable{
         Comentarios.clear();
         System.out.println(ruta.getIdRuta());
         for (int i = 0; i < ListaComentarios.size(); i++) {
+            if(ListaComentarios.get(i).getRuta()!=null){
             if (ListaComentarios.get(i).getRuta().getIdRuta()==ruta.getIdRuta()) {
                 Comentarios.add(ListaComentarios.get(i));
+            }
             }
         }
         System.out.println(Comentarios.size());
@@ -166,8 +168,10 @@ public class RutasController implements Serializable{
     public boolean compruebaFav(Rutas ruta) {
            
         for (int i = 0; i < favoritos.size(); i++) {
+            if(favoritos.get(i).getRuta()!=null){
             if(favoritos.get(i).getUsuario().getIdUsuario()==usuario.getIdUsuario() && favoritos.get(i).getRuta().getIdRuta()==ruta.getIdRuta()){
                 return true;
+            }
             }
         }
          return false;
@@ -175,9 +179,11 @@ public class RutasController implements Serializable{
 
     private Favoritos obtenerFav() {
         for (int i = 0; i < favoritos.size(); i++) {
+             if(favoritos.get(i).getRuta()!=null){
             if(favoritos.get(i).getUsuario().getIdUsuario()==usuario.getIdUsuario() && favoritos.get(i).getRuta().getIdRuta()==ruta.getIdRuta()){
                 return favoritos.get(i);
             }
+             }
         }
          return null;
     }
@@ -197,15 +203,19 @@ public class RutasController implements Serializable{
      public boolean existenComentarios(){
          System.out.println("com.unileon.controller.RutasController.existenComentarios()"+ruta.getIdRuta());
          for (int i = 0; i < ListaComentarios.size(); i++) {
+             if(ListaComentarios.get(i).getRuta()!=null){
             if (ListaComentarios.get(i).getRuta().getIdRuta()==ruta.getIdRuta()) 
              return true;
+         }
          }
              return false;
      }
      public boolean CompruebaUsuario(Comentarios a){
-        if(usuario==a.getUsuario()){
+         if(a.getUsuario()!=null&&usuario!=null){
+        if(usuario.getIdUsuario()==a.getUsuario().getIdUsuario()){
             return true;
         }
+         }
         return false;
     }
      

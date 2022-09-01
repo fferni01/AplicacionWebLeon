@@ -32,7 +32,7 @@ import javax.inject.Named;
  * @author Usuario
  */
 @Named
- @ViewScoped 
+@ViewScoped 
 public class ParquesController implements Serializable{
     private List<Parques>parques;
      private Parques parque;
@@ -223,7 +223,7 @@ public class ParquesController implements Serializable{
              return false;
      }
      public boolean CompruebaUsuario(Comentarios a){
-        if(usuario==a.getUsuario()){
+        if(usuario.getIdUsuario()==a.getUsuario().getIdUsuario()){
             return true;
         }
         return false;

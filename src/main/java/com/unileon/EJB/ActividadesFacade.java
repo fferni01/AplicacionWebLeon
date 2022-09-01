@@ -43,4 +43,12 @@ public class ActividadesFacade extends AbstractFacade<Actividades> implements Ac
         return true;
         }
     }
+    
+   public List<Actividades> obtentipo(String a){
+         String consultaJPQL = "FROM Actividades a WHERE a.Tipo=:param1 ";
+        Query query = em.createQuery(consultaJPQL);
+        query.setParameter("param1", a);
+        List<Actividades> resultado = query.getResultList();
+        return resultado;
+   }
 }

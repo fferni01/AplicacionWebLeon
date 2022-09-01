@@ -8,6 +8,7 @@ package com.unileon.controller;
 import com.unileon.EJB.UsuarioFacadeLocal;
 import com.unileon.modelo.Usuario;
 import java.io.Serializable;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -58,6 +59,8 @@ public class IniciarSesionController implements Serializable{
            if(EsAdmin(nuevo)){
                return "/Private/Admin/PrincipalAdmin.xhtml?faces-redirect=true";
            }else
+           nuevo.setFechaAcceso(new Date());
+           usuarioEJB.edit(nuevo);
             return "/Private/Usuario/PrincipalUsuario.xhtml?faces-redirect=true";
        }
         return null;

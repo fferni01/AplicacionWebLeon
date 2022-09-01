@@ -9,7 +9,7 @@
 
 #bottom {
     position: relative;
-    background-color: #c2dfef;
+    background-color: #ffffff;
     padding: 5px;
     margin: 10px 0px 0px 0px;
 }
@@ -30,7 +30,7 @@
 
 .center_content {
     position: relative;
-    background-color: #f9f9f9;
+    background-color: white;
     padding: 5px;
     margin: -10px -10px 10px -10px;
 }

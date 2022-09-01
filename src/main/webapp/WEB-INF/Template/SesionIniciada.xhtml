@@ -12,6 +12,8 @@
         <h:outputStylesheet name="/css/cssLayout.css"/>         
         <h:outputStylesheet name="/css/Registrarse.css"/>
         <h:outputStylesheet name="/css/carrusel.css"/>
+        <h:outputStylesheet name="css/primeflex.css" />
+        <h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
         <title>Facelets Template</title>
         <f:event type="preRenderView" listener="#{plantillaController.verificarYMostrar()}"/>
     </h:head>
@@ -45,7 +47,7 @@
                         <h3>Perfil</h3>
                         <p:commandButton value="Mi perfil" action="#{menuController.entrarPerfil()}" styleClass="ui-button-flat" icon="pi pi-user-edit" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px" />
                         <br></br>
-                        <p:commandButton value="Mis Favoritos"   styleClass="ui-button-flat" icon="pi pi-star" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                        <p:commandButton value="Mis Favoritos" action="#{menuController.entrarFav()}"  styleClass="ui-button-flat" icon="pi pi-star" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
                         
                 </p:sidebar>
                 <p:toolbar id="tb">
@@ -53,7 +55,6 @@
                         <p:commandButton icon="pi pi-bars" type="button" onclick="PF('sidebar1').show()" styleClass="p-mr-2" />
                     </f:facet>
                     <f:facet name="right">
-                        <p:commandButton icon="pi pi-star WhiteBlue Fs50" iconPos="left" style="float: right; margin: 0px 5px 0px 0px;"  />
                         <p:menuButton value="Perfil" iconPos="left" style="float: right">
                             <p:menuitem value="Tu perfil" action="#{menuController.entrarPerfil()}" ajax="false" update="messages" icon="pi pi-user"/>
                             <p:menuitem value="Cerrar Sesion" action="#{menuController.destruirSesion()}" ajax="false" update="messages" icon="pi pi-sign-out"/>

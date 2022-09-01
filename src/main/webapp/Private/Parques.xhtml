@@ -7,14 +7,14 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-         <h:form id="form">
+        <h:form id="form">
 
             <p:growl id="growl" showDetail="true">
                 <p:autoUpdate />
             </p:growl>
-             <p:outputLabel rendered="#{!parquesController.exitendatos()}" style="display: flex;
-  justify-content: center;" value="No existen datos para mostrar todavía"/>
-             <p:dataGrid rendered="#{parquesController.exitendatos()}" id="dataGrid" var="parque" value="#{parquesController.parques}" columns="4" layout="grid"
+            <p:outputLabel rendered="#{!parquesController.exitendatos()}" style="display: flex;
+                           justify-content: center;" value="No existen datos para mostrar todavía"/>
+            <p:dataGrid rendered="#{parquesController.exitendatos()}" id="dataGrid" var="parque" value="#{parquesController.parques}" columns="4" layout="grid"
                         rows="8" paginator="true" 
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                         rowsPerPageTemplate="8,12,16">
@@ -111,13 +111,8 @@
                             <p style="word-wrap: break-word;">#{comentario.comentario}</p>
 
 
-                            <p:menuButton style="margin-left: 88%" icon="pi pi-ellipsis-v">
-                                <p:menuitem value="Editar" icon="pi pi-file" update=":form:modcom" action="#{parquesController.setComentario(comentario)}" onclick="PF('modcom').show();"/>
-                                <p:menuitem  value="borrar"  icon="pi pi-trash" update=":form:a" ajax="false" action="#{parquesController.eliminarCom(comentario)}"/>
-                            </p:menuButton>
-
-
-
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" ajax="false" action="#{favoritosController.eliminarCom(comentario)}" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
                             <p:divider />
                         </p:dataScroller>
                     </p:scrollPanel>

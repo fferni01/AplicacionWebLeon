@@ -15,6 +15,7 @@ import com.unileon.EJB.NoticiaFacadeLocal;
 import com.unileon.EJB.ParquesFacadeLocal;
 import com.unileon.EJB.RutasFacadeLocal;
 import com.unileon.modelo.Actividades;
+import com.unileon.modelo.Cuerponoticia;
 import com.unileon.modelo.Cultura;
 import com.unileon.modelo.Deportes;
 import com.unileon.modelo.Eventos;
@@ -22,8 +23,11 @@ import com.unileon.modelo.Hoteles;
 import com.unileon.modelo.Noticia;
 import com.unileon.modelo.Parques;
 import com.unileon.modelo.Rutas;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -38,6 +42,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.imageio.ImageIO;
 import javax.inject.Named;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
@@ -107,9 +112,9 @@ public class PrincipalAdminController implements Serializable {
 
     public void iniciarWS() {
 
-        //leoNoticiasWS();
+        leoNoticiasWS();
         //yumpingWS();
-        LeonOcioWS();
+        // LeonOcioWS();
         //TerranostrumWS();
         // minubeWS();
         /*if (contador > 0) {
@@ -266,40 +271,29 @@ public class PrincipalAdminController implements Serializable {
             System.out.println(e);
         }
 
-        /* try {
-            URL url = new URL(urlImagen);
-
-            // establecemos conexion
-            URLConnection urlCon = url.openConnection();
-            urlCon.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-            // Sacamos por pantalla el tipo de fichero
-            System.out.println(urlCon.getContentType());
-
-            // Se obtiene el inputStream de la foto web y se abre el fichero
-            // local.
-            InputStream is = urlCon.getInputStream();
-            FileOutputStream fos = new FileOutputStream("C:/Users/Usuario/Documents/NetBeansProjects/TFG/src/main/webapp/resources/Imagenes/foto.jpg");
-
-            // Lectura de la foto de la web y escritura en fichero local
-            byte[] array = new byte[1000]; // buffer temporal de lectura.
-            int leido = is.read(array);
-            while (leido > 0) {
-                fos.write(array, 0, leido);
-                leido = is.read(array);
-            }
-
-            // cierre de conexion y fichero.
-            is.close();
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
         return null;
 
     }
+     public void ImagenACartpeta(byte[] response,String a,int id) {
+        
+            try {
+                File newFile= new File("C:\\Users\\Usuario\\Documents\\NetBeansProjects\\TFG\\src\\main\\webapp\\resources\\Imagenes\\"+a+"\\"+id+".jpg");
+            BufferedImage imag=ImageIO.read(new ByteArrayInputStream(response));
+            ImageIO.write(imag, "jpg", newFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+    }
     private void creaNoticia(String Titulo, ArrayList<String> ParteCuerpo, String Fecha, String imagen) throws ParseException {
+        
+        if(Titulo.length()>0&&imagen.length()>0){
+        try {
+            
+
         List<Noticia> noticias = NoticiaEJB.findAll();
+        Cuerponoticia c = new Cuerponoticia();
+
         boolean NoIgual = true;
         if (!imagen.isEmpty()) {
             noticia.setImagen(descargarImagen(imagen));
@@ -313,6 +307,7 @@ public class PrincipalAdminController implements Serializable {
         Date dataFormateada = formato.parse(Fecha);
         noticia.setFecha(dataFormateada);
         System.out.println(noticia.getTitulo());
+        
         for (int i = 0; i < noticias.size(); i++) {
             if (noticia.getTitulo().equals(noticias.get(i).getTitulo())) {
                 NoIgual = false;
@@ -320,6 +315,15 @@ public class PrincipalAdminController implements Serializable {
         }
         if (NoIgual) {
             NoticiaEJB.create(noticia);
+            ImagenACartpeta(noticia.getImagen(), "Noticias", noticia.getIdNoticia());
+            for (int i =0;i<ParteCuerpo.size();i++) {
+                c.setNoticia(noticia);
+                c.setTexto(ParteCuerpo.get(i));
+                CuerpoNoticiaEJB.create(c);
+            }
+        }
+                } catch (Exception e) {
+        }
         }
     }
 
@@ -363,15 +367,15 @@ public class PrincipalAdminController implements Serializable {
         String alojamiento = "https://leonocio.es/alojamientos-en-leon/";
         String restaurantes = "https://leonocio.es/restaurantes-en-leon/";
         String Culturaypatrimonio = "https://leonocio.es/cultura-en-leon/";
-       
+
         //eventos
         String Conciertos = "https://leonocio.es/conciertos-en-leon/?etype=upcoming";
         String Fiestas = "https://leonocio.es/fiestas-en-leon/?etype=upcoming";
-        String Ferias ="https://leonocio.es/ferias-en-leon/?etype=upcoming";
+        String Ferias = "https://leonocio.es/ferias-en-leon/?etype=upcoming";
         String Teatro = "https://leonocio.es/teatro-en-leon/?etype=upcoming";
         String proximasActividades = "https://leonocio.es/actividades-en-leon/?etype=upcoming";
-        
-         String ProximosEventos = "https://leonocio.es/eventos-en-leon/?etype=upcoming";
+
+        String ProximosEventos = "https://leonocio.es/eventos-en-leon/?etype=upcoming";
 
         sacarCookei(Hoy);
         sacarInfoDeportes(Deportes);
@@ -379,7 +383,7 @@ public class PrincipalAdminController implements Serializable {
         sacarInfoAlojamiento(alojamiento);
         //sacarInfoRestaurantes(restaurantes);
         sacarInfoCulturaypatrimonio(Culturaypatrimonio);
-        
+
         //eventos
         sacarInfoConciertos(Conciertos);
         sacarInfoFiestas(Fiestas);
@@ -618,7 +622,7 @@ public class PrincipalAdminController implements Serializable {
                     // System.out.println(contenido);
                     for (Element image : contenido) {
 
-                          Elements a = image.getElementsByClass("post_img");
+                        Elements a = image.getElementsByClass("post_img");
                         Elements img = image.getElementsByTag("img");
                         imagen = img.attr("abs:src");
                         url = a.attr("abs:href");
@@ -627,7 +631,7 @@ public class PrincipalAdminController implements Serializable {
                         Elements Direccion = image.getElementsByClass("address");
                         direccion = Direccion.text();
 
-                       /* Restaurantes.setTitulo(Titulo);
+                        /* Restaurantes.setTitulo(Titulo);
                         Restaurantes.setDireccion(direccion);
                         Restaurantes.setUrl(url);
                         Restaurantes.setImagen(descargarImagen(image));
@@ -668,7 +672,7 @@ public class PrincipalAdminController implements Serializable {
                     // System.out.println(contenido);
                     for (Element image : contenido) {
 
-                         Elements a = image.getElementsByClass("post_img");
+                        Elements a = image.getElementsByClass("post_img");
                         Elements img = image.getElementsByTag("img");
                         imagen = img.attr("abs:src");
                         url = a.attr("abs:href");
@@ -703,7 +707,7 @@ public class PrincipalAdminController implements Serializable {
     }
 
     private void sacarInfoConciertos(String Url) {
-         String Titulo = null;
+        String Titulo = null;
         String direccion = null;
         String imagen = null;
         String url = null;

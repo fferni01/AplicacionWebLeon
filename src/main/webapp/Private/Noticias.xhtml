@@ -1,10 +1,132 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../WEB-INF/Template/Template.xhtml">
-    
+                template="./../WEB-INF/Template/Template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
     <ui:define name="content">
-        content
+        <h:form id="form">
+
+            <p:growl id="growl" showDetail="true">
+                <p:autoUpdate />
+            </p:growl>
+            <p:outputLabel rendered="#{!noticiasController.exitendatos()}" style="display: flex;
+                           justify-content: center;" value="No existen datos para mostrar todavía"/>
+            <p:dataGrid rendered="#{noticiasController.exitendatos()}" id="dataGrid" var="noticia" value="#{noticiasController.listaNoticia}" columns="4" layout="grid"
+                        rows="8" paginator="true" 
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                        rowsPerPageTemplate="8,12,16">
+
+
+                <h:commandLink id="abrir" action="ListarNoticia.xhtml" actionListener="#{noticiasController.setNoticia(noticia)}">
+                    <p:card style="height: 100% ; margin: 12px">
+                        <f:facet name="header">
+
+                            <p:graphicImage height="280px" value="#{noticiasController.obtenNoticia(noticia)}"/>
+
+                        </f:facet>
+                        <f:facet name="title">
+                            #{noticia.titulo}
+
+                        </f:facet>
+
+                        #{noticiasController.obtenFecha(noticia)}                                         
+
+                    </p:card>
+                </h:commandLink>
+
+
+
+
+            </p:dataGrid>
+
+
+            <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true" style="width: 50px">
+                <p:card id ="Fav" style="height:auto;width: 450px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage  height="280px" value="#{noticiasController.obtenNoticia(noticiasController.noticia)}"/>
+
+                    </f:facet>
+                    <f:facet name="title" >
+                        <p style=""> #{noticiasController.noticia.titulo}</p>
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        <p style="word-wrap: break-word">#{noticiasController.obtenFecha()}     </p>  
+
+                    </f:facet>
+                    <f:facet name="footer">
+                        <p:commandButton  value="Añadir a Favoritos" action="#{noticiasController.aniadirFav(noticiasController.noticia)}" update="form" />   
+
+                    </f:facet>
+
+                </p:card>
+            </p:dialog>
+
+            <p:dialog header="Eliminar de favoritos" widgetVar="dlg2"  modal="true">
+                <p:card id ="Fav2" style="height:  492px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{noticiasController.obtenNoticia(noticiasController.noticia)}"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{noticiasController.noticia.titulo}
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{noticiasController.obtenFecha()}       
+
+                    </f:facet>
+                    <f:facet name="footer" >
+                        <p:commandButton value="Eliminar de Favoritos" action="#{noticiasController.eliminarFav()}" update="form" />   
+
+                    </f:facet>
+
+                </p:card>
+            </p:dialog>
+
+            <p:dialog  header="Comentarios" widgetVar="com" modal="true">
+                <p:outputPanel id="a">
+                    <p:scrollPanel style="width: auto; height: 500px" mode="native">
+
+                        <p:inputTextarea value="#{noticiasController.comentar}" placeholder="añadir un comentario..." rows="1" style="width: 100%" />
+                        <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{noticiasController.crearComentario()}" value="Comentar" update=":form:a" />   
+
+                        <p:dataScroller value="#{noticiasController.comentarios}" var="comentario" rendered="#{noticiasController.existenComentarios()}">
+
+                            <h5>#{comentario.usuario.nombre} #{comentario.usuario.apellido}</h5>
+
+
+                            <p style="word-wrap: break-word;">#{comentario.comentario}</p>
+
+
+                             <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" ajax="false" action="#{favoritosController.eliminarCom(comentario)}" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+
+
+
+
+                            <p:divider />
+                        </p:dataScroller>
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
+
+            <p:dialog  header="Modificar" widgetVar="modcom" modal="true">
+                <p:outputPanel id="modcom">
+                    <p:scrollPanel style="width: auto;" mode="native">
+                        <div>
+                            <p:inputTextarea value="#{noticiasController.comentario.comentario}" rows="1" style="width: 100%" />
+                            <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{noticiasController.modificarCom()}" value="Modificar" onclick="PF('modcom').hide();" update=":form:a" />   
+                        </div>       
+
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
     </ui:define>
 
 </ui:composition>
