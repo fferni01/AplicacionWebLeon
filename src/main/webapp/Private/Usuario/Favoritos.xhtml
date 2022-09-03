@@ -15,15 +15,14 @@
 
             <p:dataGrid id="dataGrid" var="fav" value="#{favoritosController.favoritosUsuario}" columns="4" layout="grid"
                         rows="8" paginator="true" 
-                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                        rowsPerPageTemplate="8,12,16">
+                        paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" pageLinks="4">
 
 
 
                 <p:card style="height:  472px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{favoritosController.obtenFav(fav)}"/>
+                        <p:graphicImage height="280px" value="#{favoritosController.obtenFav(fav)}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">
@@ -47,7 +46,7 @@
                 <p:card id ="Fav2" style="height:  492px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{favoritosController.obtenFav()}"/>
+                        <p:graphicImage height="280px" value="#{favoritosController.obtenFav()}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">

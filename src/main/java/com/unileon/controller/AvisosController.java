@@ -118,6 +118,12 @@ public class AvisosController implements Serializable{
         }
         return false;
     }
-    
+     public boolean combruebaUs() {
+        if(usuario.getTipo()==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
 }

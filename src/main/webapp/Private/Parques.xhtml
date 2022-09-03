@@ -16,15 +16,14 @@
                            justify-content: center;" value="No existen datos para mostrar todavía"/>
             <p:dataGrid rendered="#{parquesController.exitendatos()}" id="dataGrid" var="parque" value="#{parquesController.parques}" columns="4" layout="grid"
                         rows="8" paginator="true" 
-                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                        rowsPerPageTemplate="8,12,16">
+                        paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" pageLinks="4">
 
 
 
                 <p:card style="height:  472px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{parquesController.obtenParque(parque)}"/>
+                        <p:graphicImage height="280px" value="#{parquesController.obtenParque(parque)}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">
@@ -39,8 +38,10 @@
 
 
                     <h:outputLink  value="#{parque.url}">Ver más  </h:outputLink>
-                    <p:commandButton rendered="#{!parquesController.compruebaFav(parque)}" update=":form:Fav" onclick="PF('dlg').show();" action="#{parquesController.setParque(parque)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
-                    <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" rendered="#{parquesController.compruebaFav(parque)}" onclick="PF('dlg2').show();" action="#{parquesController.setParque(parque)}" />
+                    <p:commandButton rendered="#{!parquesController.compruebaFav(parque)and parquesController.combruebaUs()}" update=":form:Fav" onclick="PF('dlg').show();" action="#{parquesController.setParque(parque)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
+                    <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" rendered="#{parquesController.compruebaFav(parque) and parquesController.combruebaUs()}" onclick="PF('dlg2').show();" action="#{parquesController.setParque(parque)}" />
+                    <p:commandButton rendered="#{!parquesController.combruebaUs()}" action="#{parquesController.setParque(parque)}" icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat" update=":form:elm" onclick="PF('elm').show();"/>
+                   
                     <p:commandButton icon="pi pi-comments" styleClass="rounded-button ui-button-flat" update=":form:a" onclick="PF('com').show();" action="#{parquesController.crearListaComentarios(parque)}" />
 
                 </p:card>
@@ -51,12 +52,33 @@
 
             </p:dataGrid>
 
+            <p:dialog header="Eliminar" widgetVar="elm"  modal="true">
+                    <p:card id ="elm" style="height:  auto;width: 360px;margin: 12px">
+                        <f:facet name="header">
 
+                            <p:graphicImage height="280px" value="#{parquesController.obtenParque(parquesController.parque)}" stream="false"/>
+
+                        </f:facet>
+                        <f:facet name="title">
+                            #{parquesController.parque.titulo}
+                        </f:facet>
+                        <f:facet name="subtitle">
+                            #{parquesController.parque.direccion}        
+
+                        </f:facet>
+                        <f:facet name="footer">
+                            <p:commandButton value="Eliminar" action="#{parquesController.eliminarContenido()}" styleClass="ui-button-danger" update="form" />   
+
+                        </f:facet>
+
+                    </p:card>
+                </p:dialog>
+            
             <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
-                <p:card id ="Fav" style="height:  492px;margin: 12px">
+                <p:card id ="Fav" style="height:  auto;width: 360px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{parquesController.obtenParque(parquesController.parque)}"/>
+                        <p:graphicImage height="280px" value="#{parquesController.obtenParque(parquesController.parque)}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">
@@ -67,7 +89,7 @@
 
                     </f:facet>
                     <f:facet name="footer">
-                        <p:commandButton style="float: right" value="Añadir a Favoritos" action="#{parquesController.aniadirFav()}" update="form" />   
+                        <p:commandButton  value="Añadir a Favoritos" action="#{parquesController.aniadirFav()}" update="form" />   
 
                     </f:facet>
 
@@ -75,10 +97,10 @@
             </p:dialog>
 
             <p:dialog header="Eliminar de favoritos" widgetVar="dlg2"  modal="true">
-                <p:card id ="Fav2" style="height:  492px;margin: 12px">
+                <p:card id ="Fav2" style="height:  auto;width: 360px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{parquesController.obtenParque(parquesController.parque)}"/>
+                        <p:graphicImage height="280px" value="#{parquesController.obtenParque()}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">
@@ -111,8 +133,8 @@
                             <p style="word-wrap: break-word;">#{comentario.comentario}</p>
 
 
-                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
-                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" ajax="false" action="#{favoritosController.eliminarCom(comentario)}" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{parquesController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{parquesController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" action="#{parquesController.eliminarCom(comentario)}" rendered="#{parquesController.CompruebaUsuario(comentario)|| !parquesController.combruebaUs()}" update=":form:a" />
                             <p:divider />
                         </p:dataScroller>
                     </p:scrollPanel>

@@ -52,9 +52,9 @@ public class ListarNoticiaController implements Serializable {
         this.noticia = noticia;
     }
 
-    public String obtenNoticia() {
-
-        return "/resources/Imagenes/Noticias/" + noticia.getIdNoticia() + ".jpg";
+    public byte[] obtenNoticia() {
+        return noticia.getImagen();
+        //return "/resources/Imagenes/Noticias/" + noticia.getIdNoticia() + ".jpg";
     }
 
     private void obtenCuerpo() {

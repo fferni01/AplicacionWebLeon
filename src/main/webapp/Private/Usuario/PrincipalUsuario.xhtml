@@ -9,69 +9,66 @@
 
     <ui:define name="content">
         <h:form>
-                <div class="card">
-                    <p:carousel value="#{indexController.lista}" var="product" numVisible="4" numScroll="4"
-                                responsiveOptions="#{indexController.responsiveOptions}">
+
+            <p:carousel style="height: 600px;width: auto" value="#{principalController.LNoticia}" var="noticia" numVisible="4" numScroll="4"
+                        responsiveOptions="#{principalController.responsiveOptions}">
+                <f:facet name="header">
+
+                    <h3 style="margin-left: 70px">Noticias</h3>
+                </f:facet>
+
+                <h:commandLink id="abrir" action="/../ListarNoticia.xhtml" actionListener="#{principalController.setNoticia(noticia)}">
+                    <p:card style="height: 90% ; margin: 12px">
+                        <f:facet name="header">
+                            <p:graphicImage height="280px" value="#{noticia.imagen}" stream="false"/>
+                        </f:facet>
+                        <f:facet name="title">
+                            #{noticia.titulo}
+                        </f:facet>
+                        #{principalController.obtenFecha(noticia)}                                         
+
+                    </p:card>
+                </h:commandLink>
+            </p:carousel>
+            
+            <p:carousel style="height: auto;width: auto" value="#{principalController.LActividades}" var="actividad" numVisible="4" numScroll="4"
+                        responsiveOptions="#{principalController.responsiveOptions}" circular="true">
+                <f:facet name="header">
+
+                    <h3 style="margin-left: 70px">Actividades</h3>
+                </f:facet>
+
+                     <p:card style="height: 90% ;margin: 12px">
                         <f:facet name="header">
 
-                            <h3 style="margin-left: 70px">Noticias</h3>
+                            <p:graphicImage height="280px" value="#{principalController.obtenActividad(actividad)}" stream="false"/>
+
                         </f:facet>
-
-                        <div class="product-item">
-                            <div class="product-item-content">
-                                <div class="x">
-                                <img alt="user header" src="#{product.imagen}" class="product-image"/>
-                                </div>
-                                <p class="textN"> #{product.name}</p>
-
-                            </div>
-                        </div>
-                    </p:carousel>
-                </div>
-                
-                <div class="card">
-                    <p:carousel value="#{indexController.museos}" var="product" numVisible="4" numScroll="4"
-                                responsiveOptions="#{indexController.responsiveOptions}">
-                        <f:facet name="header">
-
-                            <h3 style="margin-left: 70px">Museos</h3>
+                        <f:facet name="title">
+                            #{actividad.titulo}
+                            <p:outputLabel rendered="#{principalController.espacio(actividad)}" style="color: #ffffff" value="dddddddddddddddddddddddf "/>
                         </f:facet>
+                        <f:facet name="subtitle">
+                            #{actividad.direccion}     
+                            <br/>
+                            <h:outputLink  value="#{actividad.url}">Ver más  </h:outputLink>
+                            <p:commandButton rendered="#{principalController.combruebaUs()}"   action="#{principalController.setActividad(actividad)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
+                            <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat"  rendered="#{principalController.combruebaUs()}"  action="#{principalController.setActividad(actividad)}" />
+                            <p:commandButton rendered="#{!principalController.combruebaUs()}" action="#{principalController.setActividad(actividad)}" icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat"/>
+                            <p:commandButton icon="pi pi-comments" styleClass="rounded-button ui-button-flat" />
 
-                        <div class="product-item">
-                            <div class="product-item-content">
-                                <div class="x">
-                                    <img alt="user header" src="#{product.imagen}" class="product-image"/>
-                                </div>
-                                 <p class="text"> #{product.name}</p>
-                               
-
-                            </div>
-                        </div>
-                    </p:carousel>
-                </div>
-                <div class="card">
-                    <p:carousel value="#{indexController.eventos}" var="product" numVisible="4" numScroll="4"
-                                responsiveOptions="#{indexController.responsiveOptions}">
-                        <f:facet name="header">
-
-                            <h3 style="margin-left: 70px">Eventos</h3>
                         </f:facet>
-
-                        <div class="product-item">
-                            <div class="product-item-content">
-                                
-                                <div class="x">
-                                    <img alt="user header" src="#{product.imagen}" class="product-image"/>
-                                </div>
-                                <p class="text"> #{product.name}</p>
-
-                            </div>
-                        </div>
-                    </p:carousel>
-                </div>
+                        <h2> Precio: #{actividad.precio}</h2>
 
 
-            </h:form>
+                    </p:card>
+            </p:carousel>
+       
+
+
+
+
+        </h:form>
     </ui:define>
 
 </ui:composition>

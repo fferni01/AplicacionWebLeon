@@ -1,10 +1,159 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../WEB-INF/Template/Template.xhtml">
+                template="./../WEB-INF/Template/SesionIniciada.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        content
+        <h:form id="form">
+
+            <p:growl id="growl" showDetail="true">
+                <p:autoUpdate />
+            </p:growl>
+            <p:outputLabel rendered="#{!restaurantesController.exitendatos()}" style="display: flex;
+                           justify-content: center;" value="No existen datos para mostrar todavía"/>
+            <p:dataGrid rendered="#{restaurantesController.exitendatos()}" id="dataGrid" var="restaurante" value="#{restaurantesController.restaurantes}" columns="4" layout="grid"
+                        rows="8" paginator="true" 
+                        paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" pageLinks="4">
+
+
+
+                <p:card style="height:  472px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{restaurantesController.obtenRestaurante(restaurante)}" stream="false"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{restaurante.titulo}
+                        <p:outputLabel rendered="#{restaurantesController.espacio(restaurante)}" style="color: #ffffff" value="dddddddddddddddddddddddf "/>
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{restaurante.direccion}        
+
+                    </f:facet>
+
+
+
+                    <h:outputLink  value="#{restaurante.url}">Ver más  </h:outputLink>
+                    <p:commandButton rendered="#{!restaurantesController.compruebaFav(restaurante) and restaurantesController.combruebaUs()}" update=":form:Fav" onclick="PF('dlg').show();" action="#{restaurantesController.setRestaurante(restaurante)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
+                    <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" rendered="#{restaurantesController.compruebaFav(restaurante) and restaurantesController.combruebaUs()}" onclick="PF('dlg2').show();" action="#{restaurantesController.setRestaurante(restaurante)}" />
+                 <p:commandButton rendered="#{!restaurantesController.combruebaUs()}" action="#{restaurantesController.setRestaurante(restaurante)}" icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat" update=":form:elm" onclick="PF('elm').show();"/>
+                      
+                    <p:commandButton icon="pi pi-comments" styleClass="rounded-button ui-button-flat" update=":form:a" onclick="PF('com').show();" action="#{restaurantesController.crearListaComentarios(restaurante)}" />
+
+                </p:card>
+
+
+
+
+
+            </p:dataGrid>
+            
+            <p:dialog header="Eliminar" widgetVar="elm"  modal="true">
+                    <p:card id ="elm" style="height:  auto;width: 360px;margin: 12px">
+                        <f:facet name="header">
+
+                            <p:graphicImage height="280px" value="#{restaurantesController.obtenRestaurante(restaurantesController.restaurante)}" stream="false"/>
+
+                        </f:facet>
+                        <f:facet name="title">
+                            #{restaurantesController.restaurante.titulo}
+                        </f:facet>
+                        <f:facet name="subtitle">
+                            #{restaurantesController.restaurante.direccion}        
+
+                        </f:facet>
+                        <f:facet name="footer">
+                            <p:commandButton value="Eliminar" action="#{restaurantesController.eliminarContenido()}" styleClass="ui-button-danger" update="form" />   
+
+                        </f:facet>
+
+                    </p:card>
+                </p:dialog>
+
+
+            <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
+                <p:card id ="Fav" style="height:  auto;width: 360px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{restaurantesController.obtenRestaurante(restaurantesController.restaurante)}" stream="false"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{restaurantesController.restaurante.titulo}
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{restaurantesController.restaurante.direccion}        
+
+                    </f:facet>
+                    <f:facet name="footer">
+                        <p:commandButton value="Añadir a Favoritos" action="#{restaurantesController.aniadirFav()}" update="form" />   
+
+                    </f:facet>
+
+                </p:card>
+            </p:dialog>
+
+            <p:dialog header="Eliminar de favoritos" widgetVar="dlg2"  modal="true">
+                <p:card id ="Fav2" style="height:  auto;width: 360px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{restaurantesController.obtenRestaurante()}" stream="false"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{restaurantesController.restaurante.titulo}
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{restaurantesController.restaurante.direccion}        
+
+                    </f:facet>
+                    <f:facet name="footer" >
+                        <p:commandButton value="Eliminar de Favoritos" action="#{restaurantesController.eliminarFav()}" update="form" />   
+
+                    </f:facet>
+
+                </p:card>
+            </p:dialog>
+
+            <p:dialog  header="Comentarios" widgetVar="com" modal="true">
+                <p:outputPanel id="a">
+                    <p:scrollPanel style="width: auto; height: 500px" mode="native">
+                        <div>
+                            <p:inputTextarea value="#{restaurantesController.comentar}" placeholder="añadir un comentario..." rows="1" style="width: 100%" />
+                            <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{restaurantesController.crearComentario()}" value="Comentar" update=":form:a" />   
+                        </div>       
+                        <p:dataScroller value="#{restaurantesController.comentarios}" var="comentario" rendered="#{restaurantesController.existenComentarios()}">
+
+                            <h5>#{comentario.usuario.nombre} #{comentario.usuario.apellido}</h5>
+
+
+                            <p style="word-wrap: break-word;">#{comentario.comentario}</p>
+
+
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{restaurantesController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{restaurantesController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a"  action="#{restaurantesController.eliminarCom(comentario)}" rendered="#{restaurantesController.CompruebaUsuario(comentario)|| !restaurantesController.combruebaUs()}"/>
+                            <p:divider />
+                        </p:dataScroller>
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
+
+            <p:dialog  header="Modificar" widgetVar="modcom" modal="true">
+                <p:outputPanel id="modcom">
+                    <p:scrollPanel style="width: auto;" mode="native">
+                        <div>
+                            <p:inputTextarea value="#{restaurantesController.comentario.comentario}" rows="1" style="width: 100%" />
+                            <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{restaurantesController.modificarCom()}" value="Modificar" onclick="PF('modcom').hide();" update=":form:a" />   
+                        </div>       
+
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
     </ui:define>
 
 </ui:composition>

@@ -29,5 +29,7 @@ public interface EventosFacadeLocal {
     List<Eventos> findRange(int[] range);
 
     int count();
+
+    public List<Eventos> obtentipo(String selectedOption);
     
 }

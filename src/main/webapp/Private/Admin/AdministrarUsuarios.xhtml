@@ -3,35 +3,50 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../../WEB-INF/Template/SesionAdmin.xhtml"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-       <div class="card">
-        <h5>Usuarios</h5>
-        <p:dataTable var="usuario" value="#{administrarUsuariosController.usuarios}" reflow="true" rows="6" paginator="true">
-            <p:column headerText="Usuario">
-                <h:outputText value="#{usuario.usuario}"/>
-            </p:column>
+        <h:form id="form">
+            <div class="avisos">
 
-            <p:column headerText="Nombre">
-                <h:outputText value="#{usuario.nombre}"/>
-            </p:column>
+                <p:dataTable var="usuario" value="#{administrarUsuariosController.usuarios}" reflow="true" rows="6" paginator="true">
+                    <p:column headerText="Usuario">
+                        <h:outputText value="#{usuario.usuario}"/>
+                    </p:column>
 
-            <p:column headerText="Apellidos">
-                <h:outputText value="#{usuario.apellido}"/>
-            </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{usuario.nombre}"/>
+                    </p:column>
 
-            <p:column headerText="email">
-                <h:outputText value="#{usuario.email}"/>
-            </p:column>
-            <p:column headerText="Ultimo Acceso">
-                <h:outputText value="#{usuario.fechaAcceso}"/>
-            </p:column>
-            <p:column >
-                  <p:commandButton icon="pi pi-star WhiteBlue Fs50" iconPos="left" style="float: center; margin: 0px 5px 0px 0px;"  />
-            </p:column>
-        </p:dataTable>
-    </div>
+                    <p:column headerText="Apellidos">
+                        <h:outputText value="#{usuario.apellido}"/>
+                    </p:column>
+
+                    <p:column headerText="email">
+                        <h:outputText value="#{usuario.email}"/>
+                    </p:column>
+                    <p:column headerText="Ultimo Acceso">
+                        <h:outputText value="#{administrarUsuariosController.obtenFecha(usuario)}"/>
+                    </p:column>
+                    <p:column >
+                        <p:commandButton value="Borrar" iconPos="left" action="#{administrarUsuariosController.setUs(usuario)}" onclick="PF('elm').show();" update=":form:elm" styleClass="ui-button-danger" style="float: center; margin: 0px 5px 0px 0px;"  />
+                    </p:column>
+                </p:dataTable>
+            </div>
+
+            <p:dialog header="Eliminar"  widgetVar="elm"  modal="true">
+                <p:outputPanel id="elm">
+                
+                    <h4>  ¿Quieres eliminar el usuario #{administrarUsuariosController.us.usuario}?</h4>
+                    <br></br>
+                <p:commandButton value="Eliminar" action="#{administrarUsuariosController.eliminarUsuario()}" styleClass="ui-button-danger" update="form" />   
+                <p:commandButton style="margin: 5px" value="Cancelar" onclick="PF('elm').hide();"/>   
+                </p:outputPanel>
+
+
+            </p:dialog>
+        </h:form>
     </ui:define>
 
 </ui:composition>

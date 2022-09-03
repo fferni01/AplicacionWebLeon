@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../WEB-INF/Template/Template.xhtml"
+                template="./../WEB-INF/Template/SesionIniciada.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -17,38 +17,41 @@
                            justify-content: center;" value="No existen datos para mostrar todavía"/>
             <p:dataGrid rendered="#{noticiasController.exitendatos()}" id="dataGrid" var="noticia" value="#{noticiasController.listaNoticia}" columns="4" layout="grid"
                         rows="8" paginator="true" 
-                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                        rowsPerPageTemplate="8,12,16">
+                        paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" pageLinks="4">
 
 
-                <h:commandLink id="abrir" action="ListarNoticia.xhtml" actionListener="#{noticiasController.setNoticia(noticia)}">
-                    <p:card style="height: 100% ; margin: 12px">
-                        <f:facet name="header">
 
-                            <p:graphicImage height="280px" value="#{noticiasController.obtenNoticia(noticia)}"/>
+                <p:card style="height: 100% ; margin: 12px">
+                    <f:facet name="header">
+                        <h:commandLink id="abrir" action="ListarNoticia.xhtml" actionListener="#{noticiasController.setNoticia(noticia)}">
+                            <p:graphicImage height="280px" value="#{noticia.imagen}" stream="false"/>
+                        </h:commandLink>
+                    </f:facet>
+                    <f:facet name="title">
+                         <h:commandLink id="asfd" action="ListarNoticia.xhtml" actionListener="#{noticiasController.setNoticia(noticia)}">
+                        #{noticia.titulo}
+ </h:commandLink>
+                    </f:facet> 
 
-                        </f:facet>
-                        <f:facet name="title">
-                            #{noticia.titulo}
+                    #{noticiasController.obtenFecha(noticia)}    
+&nbsp;&nbsp;&nbsp;
+                    <p:commandButton value="Eliminar" update=":form" rendered="#{!noticiasController.combruebaUs()}" action="#{noticiasController.eliminarNoticia(noticia)}" icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-outlined"/>
 
-                        </f:facet>
 
-                        #{noticiasController.obtenFecha(noticia)}                                         
+                </p:card>
 
-                    </p:card>
-                </h:commandLink>
 
 
 
 
             </p:dataGrid>
 
-
+           
             <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true" style="width: 50px">
                 <p:card id ="Fav" style="height:auto;width: 450px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage  height="280px" value="#{noticiasController.obtenNoticia(noticiasController.noticia)}"/>
+                        <p:graphicImage  height="280px" value="#{noticiasController.obtenNoticia()}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title" >
@@ -70,7 +73,7 @@
                 <p:card id ="Fav2" style="height:  492px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{noticiasController.obtenNoticia(noticiasController.noticia)}"/>
+                        <p:graphicImage height="280px" value="#{noticiasController.obtenNoticia()}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">
@@ -103,7 +106,7 @@
                             <p style="word-wrap: break-word;">#{comentario.comentario}</p>
 
 
-                             <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
                             <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" ajax="false" action="#{favoritosController.eliminarCom(comentario)}" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
 
 

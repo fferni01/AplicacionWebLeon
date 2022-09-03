@@ -22,7 +22,7 @@ import javax.inject.Named;
  * @author Usuario
  */
 @Named
-@SessionScoped
+@ViewScoped
 public class IniciarSesionController implements Serializable{
     private Usuario usuario;
     
@@ -56,8 +56,14 @@ public class IniciarSesionController implements Serializable{
             //return "index.sw2";
        }        
        else{
-           if(EsAdmin(nuevo)){
-               return "/Private/Admin/PrincipalAdmin.xhtml?faces-redirect=true";
+          if(EsAdmin(nuevo)){
+              if(nuevo.getFechaAcceso()==null){
+                  System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+                  return "/Private/Admin/RegistrarAdmin.xhtml?faces-redirect=true";
+              }else{
+                  return "/Private/Usuario/PrincipalUsuario.xhtml?faces-redirect=true";
+              }
+               
            }else
            nuevo.setFechaAcceso(new Date());
            usuarioEJB.edit(nuevo);

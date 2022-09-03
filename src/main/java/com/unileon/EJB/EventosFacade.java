@@ -6,9 +6,11 @@
 package com.unileon.EJB;
 
 import com.unileon.modelo.Eventos;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,13 @@ public class EventosFacade extends AbstractFacade<Eventos> implements EventosFac
     public EventosFacade() {
         super(Eventos.class);
     }
+    
+     public List<Eventos> obtentipo(String a){
+        String consultaJPQL = "FROM Eventos a WHERE a.Tipo=:param1 ";
+        Query query = em.createQuery(consultaJPQL);
+        query.setParameter("param1", a);
+        List<Eventos> resultado = query.getResultList();
+        return resultado;
+     }
     
 }

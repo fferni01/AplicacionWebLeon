@@ -21,15 +21,14 @@
 
             <p:dataGrid id="dataGrid" var="ruta" value="#{rutasController.rutas}" columns="4" layout="grid"
                         rows="8" paginator="true" 
-                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                        rowsPerPageTemplate="8,12,16">
+                        paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" pageLinks="4">
 
 
 
                 <p:card style="height:  472px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(ruta)}"/>
+                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(ruta)}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">
@@ -44,8 +43,10 @@
 
 
                     <h:outputLink  value="#{ruta.url}">Ver más  </h:outputLink>
-                    <p:commandButton rendered="#{!rutasController.compruebaFav(ruta)}" update=":form:Fav" onclick="PF('dlg').show();" action="#{rutasController.setRuta(ruta)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
-                    <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" rendered="#{rutasController.compruebaFav(ruta)}" onclick="PF('dlg2').show();" action="#{rutasController.setRuta(ruta)}" />
+                    <p:commandButton rendered="#{!rutasController.compruebaFav(ruta) and rutasController.combruebaUs()}" update=":form:Fav" onclick="PF('dlg').show();" action="#{rutasController.setRuta(ruta)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
+                    <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" rendered="#{rutasController.compruebaFav(ruta) and rutasController.combruebaUs()}" onclick="PF('dlg2').show();" action="#{rutasController.setRuta(ruta)}" />
+                    <p:commandButton rendered="#{!rutasController.combruebaUs()}" action="#{rutasController.setRuta(ruta)}" icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat" update=":form:elm" onclick="PF('elm').show();"/>
+                   
                     <p:commandButton icon="pi pi-comments" styleClass="rounded-button ui-button-flat" update=":form:a" onclick="PF('com').show();" action="#{rutasController.crearListaComentarios(ruta)}" />
 
                 </p:card>
@@ -56,12 +57,33 @@
 
             </p:dataGrid>
 
+             <p:dialog header="Eliminar" widgetVar="elm"  modal="true">
+                    <p:card id ="elm" style="height:  auto;width: 360px;margin: 12px">
+                        <f:facet name="header">
 
+                            <p:graphicImage height="280px" value="#{rutasController.obtenRuta(rutasController.ruta)}" stream="false"/>
+
+                        </f:facet>
+                        <f:facet name="title">
+                            #{rutasController.ruta.titulo}
+                        </f:facet>
+                        <f:facet name="subtitle">
+                            #{rutasController.ruta.direccion}        
+
+                        </f:facet>
+                        <f:facet name="footer">
+                            <p:commandButton  value="Eliminar" action="#{rutasController.eliminarContenido()}" styleClass="ui-button-danger" update="form" />   
+
+                        </f:facet>
+
+                    </p:card>
+                </p:dialog>
+            
             <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
-                <p:card id ="Fav" style="height:  492px;margin: 12px">
+                <p:card id ="Fav" style="height:  auto;width: 360px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(rutasController.ruta)}"/>
+                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(rutasController.ruta)}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">
@@ -72,7 +94,7 @@
 
                     </f:facet>
                     <f:facet name="footer">
-                        <p:commandButton style="float: right" value="Añadir a Favoritos" action="#{rutasController.aniadirFav()}" update="form" />   
+                        <p:commandButton  value="Añadir a Favoritos" action="#{rutasController.aniadirFav()}" update="form" />   
 
                     </f:facet>
 
@@ -80,10 +102,10 @@
             </p:dialog>
 
             <p:dialog header="Eliminar de favoritos" widgetVar="dlg2"  modal="true">
-                <p:card id ="Fav2" style="height:  492px;margin: 12px">
+                <p:card id ="Fav2" style="height:  auto;width: 360px;margin: 12px">
                     <f:facet name="header">
 
-                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(rutasController.ruta)}"/>
+                        <p:graphicImage height="280px" value="#{rutasController.obtenRuta(rutasController.ruta)}" stream="false"/>
 
                     </f:facet>
                     <f:facet name="title">
@@ -105,7 +127,7 @@
                 <p:outputPanel id="a">
                     <p:scrollPanel style="width: auto; height: 500px" mode="native">
                         <div>
-                            <p:inputTextarea value="#{rutasController.comentario.comentario}" placeholder="añadir un comentario..." rows="1" style="width: 100%" />
+                            <p:inputTextarea value="#{rutasController.comentar}" placeholder="añadir un comentario..." rows="1" style="width: 100%" />
                             <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{rutasController.crearComentario()}" value="Comentar" update=":form:a" />   
                         </div>       
                         <p:dataScroller value="#{rutasController.comentarios}" var="comentario" rendered="#{rutasController.existenComentarios()}">
@@ -116,12 +138,8 @@
                             <p style="word-wrap: break-word;">#{comentario.comentario}</p>
 
 
-                             <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
-                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" ajax="false" action="#{favoritosController.eliminarCom(comentario)}" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
-
-
-
-
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{rutasController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{rutasController.CompruebaUsuario(comentario)}"/>
+                            <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash"  action="#{rutasController.eliminarCom(comentario)}" rendered="#{rutasController.CompruebaUsuario(comentario) || !rutasController.combruebaUs()}" update=":form:a"/>
                             <p:divider />
                         </p:dataScroller>
                     </p:scrollPanel>

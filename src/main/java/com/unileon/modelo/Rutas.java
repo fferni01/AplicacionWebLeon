@@ -34,7 +34,7 @@ public class Rutas implements Serializable{
     @Column(name = "Url")
     private String Url;
     @Column(name = "Distancia")
-    private Double Distancia;
+    private String Distancia;
     @Column(name = "Direccion")
     private String Direccion;
     @Column(name = "Imagensrc")
@@ -67,17 +67,20 @@ public class Rutas implements Serializable{
         this.Url = Url;
     }
 
-    public Double getDistancia() {
+    public String getDistancia() {
         return Distancia;
     }
 
-    public void setDistancia(Double Distancia) {
+    public void setDistancia(String Distancia) {
         this.Distancia = Distancia;
     }
 
     public String getDireccion() {
         return Direccion;
     }
+
+  
+    
 
     public void setDireccion(String Direccion) {
         this.Direccion = Direccion;

@@ -192,71 +192,74 @@ public class FavoritosController implements Serializable {
 
     }
 
-    public String obtenFav(Favoritos fav) {
+    public byte[] obtenFav(Favoritos fav) {
 
         //cambiar rutas
         if (fav.getActividad() != null) {
-            return "/resources/Imagenes/Actividades/" + fav.getActividad().getIdActividad() + ".jpg";
+            return fav.getActividad().getImagen();
+            //   return "/resources/Imagenes/Actividades/" + fav.getActividad().getIdActividad() + ".jpg";
         }
         if (fav.getCultura() != null) {
-            return "/resources/Imagenes/Cultura/" + fav.getCultura().getIdCultura() + ".jpg";
+            return fav.getCultura().getImagen();
+
         }
         if (fav.getDeporte() != null) {
-            return "/resources/Imagenes/Deportes/" + fav.getDeporte().getIdDeportes() + ".jpg";
+            return fav.getDeporte().getImagen();
         }
         if (fav.getEvento() != null) {
-            return "/resources/Imagenes/Eventos/" + fav.getEvento().getIdEvento() + ".jpg";
+            return fav.getEvento().getImagen();
         }
         if (fav.getHotel() != null) {
-            return "/resources/Imagenes/Hoteles/" + fav.getHotel().getIdHoteles() + ".jpg";
+            return fav.getHotel().getImagen();
         }
         if (fav.getNoticia() != null) {
-            return "/resources/Imagenes/Noticias/" + fav.getNoticia().getIdNoticia() + ".jpg";
+            return fav.getNoticia().getImagen();
         }
         if (fav.getParque() != null) {
-            return "/resources/Imagenes/Parques/" + fav.getParque().getIdParque() + ".jpg";
+            return fav.getParque().getImagen();
         }
         if (fav.getRestaurante() != null) {
-            return "/resources/Imagenes/Restaurantes/" + fav.getRestaurante().getIdRestaurante() + ".jpg";
+            return fav.getRestaurante().getImagen();
         }
         if (fav.getRuta() != null) {
-            return "/resources/Imagenes/Rutas/" + fav.getRuta().getIdRuta() + ".jpg";
+            return fav.getRuta().getImagen();
         }
-        return "";
+        return null;
 
     }
 
-    public String obtenFav() {
+    public byte[] obtenFav() {
 
-        //cambiar rutas
-        if (Fav.getActividad() != null) {
-            return "/resources/Imagenes/Actividades/" + Fav.getActividad().getIdActividad() + ".jpg";
+         if (Fav.getActividad() != null) {
+            return Fav.getActividad().getImagen();
+            //   return "/resources/Imagenes/Actividades/" + Fav.getActividad().getIdActividad() + ".jpg";
         }
         if (Fav.getCultura() != null) {
-            return "/resources/Imagenes/Cultura/" + Fav.getCultura().getIdCultura() + ".jpg";
+            return Fav.getCultura().getImagen();
+
         }
         if (Fav.getDeporte() != null) {
-            return "/resources/Imagenes/Deportes/" + Fav.getDeporte().getIdDeportes() + ".jpg";
+            return Fav.getDeporte().getImagen();
         }
         if (Fav.getEvento() != null) {
-            return "/resources/Imagenes/Eventos/" + Fav.getEvento().getIdEvento() + ".jpg";
+            return Fav.getEvento().getImagen();
         }
         if (Fav.getHotel() != null) {
-            return "/resources/Imagenes/Hoteles/" + Fav.getHotel().getIdHoteles() + ".jpg";
+            return Fav.getHotel().getImagen();
         }
         if (Fav.getNoticia() != null) {
-            return "/resources/Imagenes/Noticias/" + Fav.getNoticia().getIdNoticia() + ".jpg";
+            return Fav.getNoticia().getImagen();
         }
         if (Fav.getParque() != null) {
-            return "/resources/Imagenes/Parques/" + Fav.getParque().getIdParque() + ".jpg";
+            return Fav.getParque().getImagen();
         }
         if (Fav.getRestaurante() != null) {
-            return "/resources/Imagenes/Restaurantes/" + Fav.getRestaurante().getIdRestaurante() + ".jpg";
+            return Fav.getRestaurante().getImagen();
         }
         if (Fav.getRuta() != null) {
-            return "/resources/Imagenes/Rutas/" + Fav.getRuta().getIdRuta() + ".jpg";
+            return Fav.getRuta().getImagen();
         }
-        return "";
+        return null;
 
     }
 
@@ -607,9 +610,9 @@ public class FavoritosController implements Serializable {
 
     public boolean existenComentarios() {
         if (Fav.getActividad() != null) {
-            if (!ListaComentarios.isEmpty() && Fav.getActividad().getIdActividad()!= 0) {
+            if (!ListaComentarios.isEmpty() && Fav.getActividad().getIdActividad() != 0) {
                 for (int i = 0; i < ListaComentarios.size(); i++) {
-                    if (ListaComentarios.get(i).getActividad()!= null) {
+                    if (ListaComentarios.get(i).getActividad() != null) {
                         if (ListaComentarios.get(i).getActividad().getIdActividad() == Fav.getActividad().getIdActividad()) {
                             return true;
                         }
@@ -620,8 +623,8 @@ public class FavoritosController implements Serializable {
         if (Fav.getCultura() != null) {
             if (!ListaComentarios.isEmpty() && Fav.getCultura().getIdCultura() != 0) {
                 for (int i = 0; i < ListaComentarios.size(); i++) {
-                    if (ListaComentarios.get(i).getCultura()!= null) {
-                        if (ListaComentarios.get(i).getCultura().getIdCultura()== Fav.getCultura().getIdCultura()) {
+                    if (ListaComentarios.get(i).getCultura() != null) {
+                        if (ListaComentarios.get(i).getCultura().getIdCultura() == Fav.getCultura().getIdCultura()) {
                             return true;
                         }
                     }
@@ -629,10 +632,10 @@ public class FavoritosController implements Serializable {
             }
         }
         if (Fav.getDeporte() != null) {
-            if (!ListaComentarios.isEmpty() && Fav.getDeporte().getIdDeportes()!= 0) {
+            if (!ListaComentarios.isEmpty() && Fav.getDeporte().getIdDeportes() != 0) {
                 for (int i = 0; i < ListaComentarios.size(); i++) {
-                    if (ListaComentarios.get(i).getDeporte()!= null) {
-                        if (ListaComentarios.get(i).getDeporte().getIdDeportes()== Fav.getDeporte().getIdDeportes()) {
+                    if (ListaComentarios.get(i).getDeporte() != null) {
+                        if (ListaComentarios.get(i).getDeporte().getIdDeportes() == Fav.getDeporte().getIdDeportes()) {
                             return true;
                         }
                     }
@@ -640,10 +643,10 @@ public class FavoritosController implements Serializable {
             }
         }
         if (Fav.getEvento() != null) {
-            if (!ListaComentarios.isEmpty() && Fav.getEvento().getIdEvento()!= 0) {
+            if (!ListaComentarios.isEmpty() && Fav.getEvento().getIdEvento() != 0) {
                 for (int i = 0; i < ListaComentarios.size(); i++) {
                     if (ListaComentarios.get(i).getEvento() != null) {
-                        if (ListaComentarios.get(i).getEvento().getIdEvento()== Fav.getEvento().getIdEvento()) {
+                        if (ListaComentarios.get(i).getEvento().getIdEvento() == Fav.getEvento().getIdEvento()) {
                             return true;
                         }
                     }
@@ -665,7 +668,7 @@ public class FavoritosController implements Serializable {
             if (!ListaComentarios.isEmpty() && Fav.getNoticia().getIdNoticia() != 0) {
                 for (int i = 0; i < ListaComentarios.size(); i++) {
                     if (ListaComentarios.get(i).getNoticia() != null) {
-                        if (ListaComentarios.get(i).getNoticia().getIdNoticia()== Fav.getNoticia().getIdNoticia()) {
+                        if (ListaComentarios.get(i).getNoticia().getIdNoticia() == Fav.getNoticia().getIdNoticia()) {
                             return true;
                         }
                     }
@@ -684,7 +687,7 @@ public class FavoritosController implements Serializable {
             }
         }
         if (Fav.getRestaurante() != null) {
-            if (!ListaComentarios.isEmpty() && Fav.getRestaurante().getIdRestaurante()!= 0) {
+            if (!ListaComentarios.isEmpty() && Fav.getRestaurante().getIdRestaurante() != 0) {
                 for (int i = 0; i < ListaComentarios.size(); i++) {
                     if (ListaComentarios.get(i).getRestaurante() != null) {
                         if (ListaComentarios.get(i).getRestaurante().getIdRestaurante() == Fav.getRestaurante().getIdRestaurante()) {

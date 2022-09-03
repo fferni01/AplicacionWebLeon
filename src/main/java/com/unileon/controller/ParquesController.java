@@ -114,9 +114,16 @@ public class ParquesController implements Serializable{
     }
 
     
-    public String obtenParque(Parques Parque){
+    public byte[] obtenParque(Parques Parque){
         
-       return "/resources/Imagenes/Parques/"+Parque.getIdParque()+".jpg";
+       //return "/resources/Imagenes/Parques/"+Parque.getIdParque()+".jpg";
+       return Parque.getImagen();
+    }
+    
+     public byte[] obtenParque(){
+        
+       //return "/resources/Imagenes/Parques/"+Parque.getIdParque()+".jpg";
+       return parque.getImagen();
     }
      //descargar
     public void onPageLoad() {
@@ -248,4 +255,16 @@ public class ParquesController implements Serializable{
         }
         return true;
     }
+     public boolean combruebaUs() {
+        if(usuario.getTipo()==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+      public void eliminarContenido(){
+         ParquesEJB.remove(parque);
+         parques= ParquesEJB.findAll();
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Se ha Eliminado Parque"));
+     }
 }

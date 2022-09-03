@@ -12,43 +12,46 @@
         <h:outputStylesheet name="/css/cssLayout.css"/>         
         <h:outputStylesheet name="/css/Registrarse.css"/>
         <h:outputStylesheet name="/css/carrusel.css"/>
-        <h:outputStylesheet name="css/primeflex.css" />
-        <h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
         <title>Facelets Template</title>
         <f:event type="preRenderView" listener="#{plantillaController.verificarYMostrar()}"/>
     </h:head>
 
     <h:body>
 
-         <div id="top">
+        <div id="top">
             <h:form>
                 <p:sidebar widgetVar="sidebar1" showCloseIcon="false" >
-                      <br></br>
-                    <p:commandButton icon="pi pi-bars" type="button" onclick="PF('sidebar1').hide()" styleClass="p-mr-2" style="margin-left: -10px; margin-top:-20px  "/>
-                        <h3>León</h3>
-                        <p:commandButton value="Noticias" action="#{menuController.entrarNoticias()}" styleClass="ui-button-flat" icon="pi pi-book" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        <br></br>
-                        <p:commandButton value="Eventos" action="#{menuController.entrarEventos()}" styleClass="ui-button-flat" icon="pi pi-ticket" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px" />
-                        <br></br>
-                        <p:commandButton value="Actividades" action="#{menuController.entrarActividades()}"  styleClass="ui-button-flat" icon="pi pi-calendar" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        <br></br>
-                        <p:commandButton value="Hoteles" action="#{menuController.entrarHoteles()}"  styleClass="ui-button-flat" icon="pi pi-building" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        <br></br>
-                        <p:commandButton value="Restaurantes" action="#{menuController.entrarRestaurantes()}"  styleClass="ui-button-flat" icon="pi pi-home" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        <br></br>
-                        <p:commandButton value="Parques" action="#{menuController.entrarParques()}"  styleClass="ui-button-flat" icon="pi pi-image" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        <br></br>
-                        <p:commandButton value="Rutas" action="#{menuController.entrarRutas()}"  styleClass="ui-button-flat" icon="pi pi-map" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        <br></br>
-                        <p:commandButton value="Cultura" action="#{menuController.entrarCultura()}"  styleClass="ui-button-flat" icon="pi pi-book" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        <br></br>
-                        <p:commandButton value="Avisos" action="#{menuController.entrarAvisos()}"  styleClass="ui-button-flat" icon="pi pi-file" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        
-                        <h3>Perfil</h3>
-                        <p:commandButton value="Mi perfil" action="#{menuController.entrarPerfil()}" styleClass="ui-button-flat" icon="pi pi-user-edit" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px" />
-                        <br></br>
-                        <p:commandButton value="Mis Favoritos" action="#{menuController.entrarFav()}"  styleClass="ui-button-flat" icon="pi pi-star" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
-                        
+                      
+                    <p:commandButton icon="pi pi-bars" type="button" onclick="PF('sidebar1').hide()" styleClass="p-mr-2" style="margin-right: 10px;margin-bottom: 10px; margin-top:5px  "/>
+                     <br/>
+     
+                    <h:outputLabel style="font-size:18px  ;color: black;font-weight: bold;" rendered="#{!menuController.combruebaUs()}" value="León"/>
+                    <p:commandButton value="Noticias" action="#{menuController.entrarNoticias()}" styleClass="ui-button-flat" icon="pi pi-book" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                    <br></br>
+                    <p:commandButton value="Eventos" action="#{menuController.entrarEventos()}" styleClass="ui-button-flat" icon="pi pi-ticket" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px" />
+                    <br></br>
+                    <p:commandButton value="Actividades" action="#{menuController.entrarActividades()}"  styleClass="ui-button-flat" icon="pi pi-calendar" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                    <br></br>
+                    <p:commandButton value="Hoteles" action="#{menuController.entrarHoteles()}"  styleClass="ui-button-flat" icon="pi pi-building" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                    <br></br>
+                    <p:commandButton value="Restaurantes" action="#{menuController.entrarRestaurantes()}"  styleClass="ui-button-flat" icon="pi pi-home" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                    <br></br>
+                    <p:commandButton value="Parques" action="#{menuController.entrarParques()}"  styleClass="ui-button-flat" icon="pi pi-image" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                    <br></br>
+                    <p:commandButton value="Rutas" action="#{menuController.entrarRutas()}"  styleClass="ui-button-flat" icon="pi pi-map" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                    <br></br>
+                    <p:commandButton value="Cultura" action="#{menuController.entrarCultura()}"  styleClass="ui-button-flat" icon="pi pi-book" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                    <br></br>
+                    <p:commandButton value="Avisos" action="#{menuController.entrarAvisos()}"  styleClass="ui-button-flat" icon="pi pi-file" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+
+                    <h:outputLabel style="font-size:18px  ;color: black;font-weight: bold;" rendered="#{menuController.combruebaUs()}" value="Perfil"/>
+                    <p:commandButton rendered="#{menuController.combruebaUs()}" value="Mi perfil" action="#{menuController.entrarPerfil()}" styleClass="ui-button-flat" icon="pi pi-user-edit" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px" />
+                    <br></br>
+                    <p:commandButton rendered="#{menuController.combruebaUs()}" value="Mis Favoritos" action="#{menuController.entrarFav()}"  styleClass="ui-button-flat" icon="pi pi-star" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+
+                    <h:outputLabel style="font-size:18px  ;color: black;font-weight: bold;" rendered="#{!menuController.combruebaUs()}" value="Administrar"/>
+                    <p:commandButton rendered="#{!menuController.combruebaUs()}" value="Usuarios" action="#{menuController.verUsuariosAdm()}" styleClass="ui-button-flat" icon="pi pi-user-edit" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px" />
+
                 </p:sidebar>
                 <p:toolbar id="tb">
                     <f:facet name="left">
@@ -56,13 +59,14 @@
                     </f:facet>
                     <f:facet name="right">
                         <p:menuButton value="Perfil" iconPos="left" style="float: right">
-                            <p:menuitem value="Tu perfil" action="#{menuController.entrarPerfil()}" ajax="false" update="messages" icon="pi pi-user"/>
+                            <p:menuitem rendered="#{menuController.combruebaUs()}" value="Tu perfil" action="#{menuController.entrarPerfil()}" ajax="false" update="messages" icon="pi pi-user"/>
+                            <p:menuitem rendered="#{!menuController.combruebaUs()}" value="Tu perfil" action="#{menuController.entrarPerfilAdm()}" ajax="false" update="messages" icon="pi pi-user"/>
                             <p:menuitem value="Cerrar Sesion" action="#{menuController.destruirSesion()}" ajax="false" update="messages" icon="pi pi-sign-out"/>
                         </p:menuButton>
                     </f:facet>
                 </p:toolbar>
 
-               <!-- <p:sticky target="tb"/>-->
+                <!-- <p:sticky target="tb"/>-->
 
             </h:form>
         </div>

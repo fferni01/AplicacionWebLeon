@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../WEB-INF/Template/Template.xhtml"
+                template="./../WEB-INF/Template/SesionIniciada.xhtml"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="content" >
-
+<div class="avisos" >
         <h:form id="form">
             <p:growl id="growl" showDetail="true">
                 <p:autoUpdate />
@@ -35,9 +35,9 @@
                    
                     <p:menuButton  icon="pi pi-ellipsis-v" rendered="#{avisosController.CompruebaUsuario(aviso)}" style="float: right">
                         <p:menuitem value="Editar" id="btn"  icon="pi pi-file" update=":form:avisoDetail" action="#{avisosController.setAviso(aviso)}" onclick="PF('dlg').show();"/>
-                        <p:menuitem value="borrar"  ajax="false" action="#{avisosController.eliminar(aviso)}"  update=":form:avisoDetail" icon="pi pi-trash"/>
+                        <p:menuitem value="borrar"  ajax="false" action="#{avisosController.eliminar(aviso)}"  update=":form" icon="pi pi-trash"/>
                     </p:menuButton>
-
+                    <p:commandButton value="Borrar" style="float: right" rendered="#{!avisosController.combruebaUs()}" iconPos="left" styleClass="ui-button-danger" action="#{avisosController.eliminar(aviso)}"  update=":form"  />
                     <f:facet name="footer">
                         #{avisosController.fechaProcesada(aviso.fecha)} 
                     </f:facet>
@@ -79,7 +79,7 @@
               
             </p:dialog>
         </h:form>
-
+        </div>
     </ui:define>
 
 </ui:composition>

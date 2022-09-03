@@ -84,8 +84,11 @@ public class ActividadesController implements Serializable{
            
             actividades.clear();
             System.out.println(selectedOption);
+            if(selectedOption.equals("Ver Todo")){
+                 actividades=ActividadesEJB.findAll();
+            }else{
             actividades=ActividadesEJB.obtentipo(selectedOption);
-        
+            }
     }
 
     public List<Actividades> getActividades() {
@@ -140,9 +143,16 @@ public class ActividadesController implements Serializable{
     }
 
     
-    public String obtenActividad(Actividades Actividad){
+    public byte[] obtenActividad(Actividades Actividad){
         
-       return "/resources/Imagenes/Actividades/"+Actividad.getIdActividad()+".jpg";
+      // return "/resources/Imagenes/Actividades/"+Actividad.getIdActividad()+".jpg";
+        System.err.println(Actividad.getTitulo());
+      return Actividad.getImagen();
+    }
+     public byte[] obtenActividad(){
+        
+      // return "/resources/Imagenes/Actividades/"+Actividad.getIdActividad()+".jpg";
+      return actividad.getImagen();
     }
      //descargar
     public void onPageLoad() {
@@ -276,12 +286,23 @@ public class ActividadesController implements Serializable{
     }
 
     private void obtenTipoActividad() {
-         
+          tipos.add("Ver Todo");
           for (Actividades act : actividades) {
               if(!tipos.contains(act.getTipo())){
                   tipos.add(act.getTipo());
               }
             }
           }
-    
+    public boolean combruebaUs() {
+        if(usuario.getTipo()==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+     public void eliminarContenido(){
+         ActividadesEJB.remove(actividad);
+         actividades= ActividadesEJB.findAll();
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Se ha Eliminado Actividad"));
+     }
 }

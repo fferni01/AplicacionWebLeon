@@ -25,7 +25,6 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Named;
 
@@ -51,9 +50,12 @@ public class NoticiasController implements Serializable{
      private FavoritosFacadeLocal favoritosEJB;
      @EJB
      private ComentariosFacadeLocal comentariosEJB;
-     @PostConstruct
      
+   
+     @PostConstruct     
      public void init(){
+       
+       
          listaNoticia=NoticiaEJB.findAll();
          noticia=new Noticia();
          usuario= (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
@@ -62,6 +64,7 @@ public class NoticiasController implements Serializable{
          ListaComentarios=comentariosEJB.findAll();
         favoritos= favoritosEJB.findAll();
         Comentarios= new ArrayList<>();
+       
      }
 
     public Noticia getNoticia() {
@@ -156,11 +159,27 @@ public class NoticiasController implements Serializable{
     }
 
     
-    public String obtenNoticia(Noticia Noticia){
-        
-       return "/resources/Imagenes/Noticias/"+Noticia.getIdNoticia()+".jpg";
+    public byte[] obtenNoticia(Noticia Noticia) {
+         //InputStream is = new ByteArrayInputStream(noticia.getImagen());
+      /*    try {
+          HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+      
+           response.getOutputStream().write(Noticia.getImagen());
+           StreamedContent content = DefaultStreamedContent.builder().contentType("image/png");
+           
+           response.getOutputStream().close();
+          } catch (IOException ex) {
+           Logger.getLogger(NoticiasController.class.getName()).log(Level.SEVERE, null, ex);
+       }*/
+       return Noticia.getImagen();
+
     }
-     //descargar
+    public byte[] obtenNoticia(){
+
+       //return "/resources/Imagenes/Noticias/"+noticia.getIdNoticia()+".jpg";
+       return noticia.getImagen();
+    }
+  /*   //descargar
     public void onPageLoad() {
         System.out.println("com.unileon.controller.NoticiaController.onPageLoad()aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         for (Noticia Noticia : listaNoticia) {
@@ -174,11 +193,11 @@ public class NoticiasController implements Serializable{
                 e.printStackTrace();
             }
             
-            
+            a=false;
                   
         }
         
-    }
+    }*/
     public boolean espacio(Noticia Noticia){
         
         if(Noticia.getTitulo().length()<38)
@@ -314,4 +333,17 @@ public class NoticiasController implements Serializable{
         }
         return "a";
     }
+     public boolean combruebaUs() {
+        if(usuario.getTipo()==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+     
+     public void eliminarNoticia(Noticia n){
+         NoticiaEJB.remove(n);
+         listaNoticia= NoticiaEJB.findAll();
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Se ha Eliminado Noticia"));
+     }
 }

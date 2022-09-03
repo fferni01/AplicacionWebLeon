@@ -28,7 +28,7 @@
                 </div>
                 <p:dataGrid rendered="#{actividadesController.exitendatos()}" id="dataGrid" var="actividad" value="#{actividadesController.actividades}" columns="4" layout="grid"
                             rows="8" paginator="true" 
-                            paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+                            paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" pageLinks="4"
                             >
 
 
@@ -36,7 +36,7 @@
                     <p:card style="height: 100% ;margin: 12px">
                         <f:facet name="header">
 
-                            <p:graphicImage height="280px" value="#{actividadesController.obtenActividad(actividad)}"/>
+                            <p:graphicImage height="280px" value="#{actividadesController.obtenActividad(actividad)}" stream="false"/>
 
                         </f:facet>
                         <f:facet name="title">
@@ -47,8 +47,9 @@
                             #{actividad.direccion}     
                             <br/>
                             <h:outputLink  value="#{actividad.url}">Ver más  </h:outputLink>
-                            <p:commandButton rendered="#{!actividadesController.compruebaFav(actividad)}" update=":form:Fav" onclick="PF('dlg').show();" action="#{actividadesController.setActividad(actividad)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
-                            <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" rendered="#{actividadesController.compruebaFav(actividad)}" onclick="PF('dlg2').show();" action="#{actividadesController.setActividad(actividad)}" />
+                            <p:commandButton rendered="#{!actividadesController.compruebaFav(actividad) and actividadesController.combruebaUs()}" update=":form:Fav" onclick="PF('dlg').show();" action="#{actividadesController.setActividad(actividad)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
+                            <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat" update=":form:Fav2" rendered="#{actividadesController.compruebaFav(actividad) and  actividadesController.combruebaUs()}" onclick="PF('dlg2').show();" action="#{actividadesController.setActividad(actividad)}" />
+                            <p:commandButton rendered="#{!actividadesController.combruebaUs()}" action="#{actividadesController.setActividad(actividad)}" icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat" update=":form:elm" onclick="PF('elm').show();"/>
                             <p:commandButton icon="pi pi-comments" styleClass="rounded-button ui-button-flat" update=":form:a" onclick="PF('com').show();" action="#{actividadesController.crearListaComentarios(actividad)}" />
 
                         </f:facet>
@@ -63,12 +64,11 @@
 
                 </p:dataGrid>
 
-
-                <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
-                    <p:card id ="Fav" style="height:  492px;margin: 12px">
+                <p:dialog header="Eliminar" widgetVar="elm"  modal="true">
+                    <p:card id ="elm" style="height:  492px;width: 360px;margin: 12px">
                         <f:facet name="header">
 
-                            <p:graphicImage height="280px" value="#{actividadesController.obtenActividad(actividadesController.actividad)}"/>
+                            <p:graphicImage height="280px" value="#{actividadesController.obtenActividad()}" stream="false"/>
 
                         </f:facet>
                         <f:facet name="title">
@@ -79,7 +79,29 @@
 
                         </f:facet>
                         <f:facet name="footer">
-                            <p:commandButton style="float: right" value="Añadir a Favoritos" action="#{actividadesController.aniadirFav()}" update="form" />   
+                            <p:commandButton value="Eliminar" action="#{actividadesController.eliminarContenido()}" styleClass="ui-button-danger" update="form" />   
+
+                        </f:facet>
+
+                    </p:card>
+                </p:dialog>
+                
+                <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
+                    <p:card id ="Fav" style="height:  492px;width: 360px;margin: 12px">
+                        <f:facet name="header">
+
+                            <p:graphicImage height="280px" value="#{actividadesController.obtenActividad()}" stream="false"/>
+
+                        </f:facet>
+                        <f:facet name="title">
+                            #{actividadesController.actividad.titulo}
+                        </f:facet>
+                        <f:facet name="subtitle">
+                            #{actividadesController.actividad.direccion}        
+
+                        </f:facet>
+                        <f:facet name="footer">
+                            <p:commandButton value="Añadir a Favoritos" action="#{actividadesController.aniadirFav()}" update="form" />   
 
                         </f:facet>
 
@@ -87,10 +109,10 @@
                 </p:dialog>
 
                 <p:dialog header="Eliminar de favoritos" widgetVar="dlg2"  modal="true">
-                    <p:card id ="Fav2" style="height:  492px;margin: 12px">
+                    <p:card id ="Fav2" style="height:  492px;width: 360px;margin: 12px">
                         <f:facet name="header">
 
-                            <p:graphicImage height="280px" value="#{actividadesController.obtenActividad(actividadesController.actividad)}"/>
+                            <p:graphicImage height="280px" value="#{actividadesController.obtenActividad()}" stream="false"/>
 
                         </f:facet>
                         <f:facet name="title">
@@ -123,8 +145,8 @@
                                 <p style="word-wrap: break-word;">#{comentario.comentario}</p>
 
 
-                                <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{favoritosController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
-                                <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" ajax="false" action="#{favoritosController.eliminarCom(comentario)}" rendered="#{favoritosController.CompruebaUsuario(comentario)}"/>
+                                <p:commandButton style="margin: 5px;float: right" icon="pi pi-file" update=":form:modcom" action="#{actividadesController.setComentario(comentario)}" onclick="PF('modcom').show();" rendered="#{actividadesController.CompruebaUsuario(comentario)}"/>
+                                <p:commandButton style="margin: 5px;float: right" icon="pi pi-trash" update=":form:a" action="#{actividadesController.eliminarCom(comentario)}" rendered="#{actividadesController.CompruebaUsuario(comentario) || !rutasController.combruebaUs()}"/>
                                 <p:divider />
                             </p:dataScroller>
                         </p:scrollPanel>
