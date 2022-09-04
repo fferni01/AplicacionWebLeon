@@ -50,6 +50,31 @@
             <artifactId>primefaces</artifactId>
             <version>11.0.0</version>
         </dependency>
+         <dependency>
+     <groupId>com.sun.faces</groupId>
+     <artifactId>jsf-api</artifactId>
+     <version>2.2.11</version>
+   </dependency>
+
+   <dependency>
+     <groupId>com.sun.faces</groupId>
+     <artifactId>jsf-impl</artifactId>
+     <version>2.2.11</version>
+   </dependency>
+
+   <dependency>
+     <groupId>javax.el</groupId>
+     <artifactId>javax.el-api</artifactId>
+     <version>3.0.1-b04</version>
+   </dependency>
+
+   <dependency>
+     <groupId>javax.servlet.jsp.jstl</groupId>
+     <artifactId>jstl-api</artifactId>
+     <version>1.2</version>
+   </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 <dependency>
     <groupId>org.jsoup</groupId>
