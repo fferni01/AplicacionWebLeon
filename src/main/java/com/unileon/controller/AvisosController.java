@@ -133,7 +133,7 @@ public class AvisosController implements Serializable{
        
        
         for (int i = 0; i < avisos.size(); i++) {
-            if(diasEntreDosFechas(avisos.get(i).getFecha(),new Date())<3){
+            if(diasEntreDosFechas(avisos.get(i).getFecha(),new Date())>3){
                 AvisosEJB.remove(avisos.get(i));
             }
         }
