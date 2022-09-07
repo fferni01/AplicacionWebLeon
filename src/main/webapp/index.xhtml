@@ -14,34 +14,51 @@
 
     <h:body>
         <div id="content" class="center_content">
-         <p:messages id="messages" showDetail="true" closable="true">
-                    <p:autoUpdate/>
-        </p:messages>
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
             <div style="display:flex;
-    justify-content:center;
-    align-items: flex-start;
-       height: 100vh;
-       margin-top: 200px">
+                 justify-content:center;
+                 align-items: flex-start;
+                 height: 100vh;
+                 margin-top: 200px">
 
-        <h:form>
-        <p:fieldset legend="Iniciar Sesion" style="width: 100%"  >
-           
-                <p:panelGrid columns="2"  styleClass="ui-noborder">
-                    <p:outputLabel value="Nombre de usuario" for="@next"/>
-                    <p:inputText value="#{iniciarSesionController.usuario.usuario}"/>
-                    
-                    <p:outputLabel value="Contraseña" for="@next"/>
-                    <p:password value="#{iniciarSesionController.usuario.password}"/>
+                <h:form id="form">
+                    <p:fieldset legend="Iniciar Sesion" style="width: 100%"  >
+
+                        <p:panelGrid columns="2"  styleClass="ui-noborder">
+                            <p:outputLabel value="Nombre de usuario" for="@next"/>
+                            <p:inputText value="#{iniciarSesionController.usuario.usuario}"/>
+
+                            <p:outputLabel value="Contraseña" for="@next"/>
+                            <p:password value="#{iniciarSesionController.usuario.password}"/>
+
+                            <p:commandButton value="Iniciar sesión" action="#{iniciarSesionController.verificarUsuario()}"/>
+                            <p:commandButton action="/Public/Registrarse.xhtml" value="Registrarse"  />
+                            <p:commandButton value="Recuperar contraseña" onclick="PF('wdialog').show();"></p:commandButton>
+                        </p:panelGrid>
+
+                    </p:fieldset>
+
+                    <p:dialog id="dialog" header="Recuperar contraseña" widgetVar="wdialog" >
                      
-                    <p:commandButton value="Iniciar sesión" action="#{iniciarSesionController.verificarUsuario()}"/>
-                    <p:commandButton action="/Public/Registrarse.xhtml" value="Registrarse"  />
-                </p:panelGrid>
-            
-        </p:fieldset>
-            
-        </h:form>
-                        </div>
-    </div>
+                          
+
+                                <p:panelGrid id="asd" columns="2"  styleClass="ui-noborder">
+                                    <p:outputLabel value="Introduzca nombre de usuario"/>
+                                    <p:inputText value="#{iniciarSesionController.nus}"/>
+
+                                    <p:commandButton value="Enviar correo" onclick="PF('wdialog').hide()" action="#{iniciarSesionController.enviarConGMail()}"/>
+                                  
+                                </p:panelGrid>
+
+           
+
+                    </p:dialog>
+
+                </h:form>
+            </div>
+        </div>
     </h:body>
 
 </html>

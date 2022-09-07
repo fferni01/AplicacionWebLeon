@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<ui:composition 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../../WEB-INF/Template/SesionIniciada.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -17,8 +18,8 @@
                     <h3 style="margin-left: 70px">Noticias</h3>
                 </f:facet>
 
-                <h:commandLink id="abrir" action="/../ListarNoticia.xhtml" actionListener="#{principalController.setNoticia(noticia)}">
-                    <p:card style="height: 90% ; margin: 12px">
+          
+                    <p:card style="height: 95% ; margin: 12px">
                         <f:facet name="header">
                             <p:graphicImage height="280px" value="#{noticia.imagen}" stream="false"/>
                         </f:facet>
@@ -28,7 +29,7 @@
                         #{principalController.obtenFecha(noticia)}                                         
 
                     </p:card>
-                </h:commandLink>
+              
             </p:carousel>
             
             <p:carousel style="height: auto;width: auto" value="#{principalController.LActividades}" var="actividad" numVisible="4" numScroll="4"
@@ -52,10 +53,6 @@
                             #{actividad.direccion}     
                             <br/>
                             <h:outputLink  value="#{actividad.url}">Ver más  </h:outputLink>
-                            <p:commandButton rendered="#{principalController.combruebaUs()}"   action="#{principalController.setActividad(actividad)}" icon="pi pi-heart" styleClass="rounded-button ui-button-help ui-button-flat" />        
-                            <p:commandButton icon="pi pi-heart-fill" styleClass="rounded-button ui-button-help ui-button-flat"  rendered="#{principalController.combruebaUs()}"  action="#{principalController.setActividad(actividad)}" />
-                            <p:commandButton rendered="#{!principalController.combruebaUs()}" action="#{principalController.setActividad(actividad)}" icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat"/>
-                            <p:commandButton icon="pi pi-comments" styleClass="rounded-button ui-button-flat" />
 
                         </f:facet>
                         <h2> Precio: #{actividad.precio}</h2>

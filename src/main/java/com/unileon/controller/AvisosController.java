@@ -9,6 +9,7 @@ import com.unileon.EJB.AvisosFacadeLocal;
 import com.unileon.modelo.Avisos;
 import com.unileon.modelo.Usuario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -35,6 +36,8 @@ public class AvisosController implements Serializable{
     
     @PostConstruct
     public void init(){
+        avisos=AvisosEJB.findAll();
+        compruebaSiHanPasadotresdias();
         avisos=AvisosEJB.findAll();
         aviso= new Avisos();
         avisoN=new Avisos();
@@ -124,6 +127,28 @@ public class AvisosController implements Serializable{
         }else{
             return false;
         }
+    }
+
+    private void compruebaSiHanPasadotresdias() {
+       
+       
+        for (int i = 0; i < avisos.size(); i++) {
+            if(diasEntreDosFechas(avisos.get(i).getFecha(),new Date())<3){
+                AvisosEJB.remove(avisos.get(i));
+            }
+        }
+    }
+
+  
+     public static long diasEntreDosFechas(Date fechaDesde, Date fechaHasta){
+     long startTime = fechaDesde.getTime() ;
+     long endTime = fechaHasta.getTime();
+     long diasDesde = (long) Math.floor(startTime / (1000*60*60*24)); // convertimos a dias, para que no afecten cambios de hora 
+     long diasHasta = (long) Math.floor(endTime / (1000*60*60*24)); // convertimos a dias, para que no afecten cambios de hora
+     long dias = diasHasta - diasDesde;
+
+     return dias;
+
     }
     
 }

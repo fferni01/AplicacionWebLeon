@@ -80,7 +80,7 @@ public class ResgistratseController implements Serializable {
         return false;
     }
 
-    private boolean containsUpperCaseLetter(String s) {
+    public boolean containsUpperCaseLetter(String s) {
         for (int i = 0; i < s.length(); i++) {
             if (Character.isUpperCase(s.charAt(i))) {
                 return true;
@@ -89,7 +89,7 @@ public class ResgistratseController implements Serializable {
         return false;
     }
 
-    private boolean containsLowerCaseLetter(String s) {
+    public boolean containsLowerCaseLetter(String s) {
         for (int i = 0; i < s.length(); i++) {
             if (Character.isLowerCase(s.charAt(i))) {
                 return true;
@@ -98,7 +98,7 @@ public class ResgistratseController implements Serializable {
         return false;
     }
 
-    private boolean containsDigit(String s) {
+    public boolean containsDigit(String s) {
         boolean containsDigit = false;
         if (s != null && !s.isEmpty()) {
             for (char c : s.toCharArray()) {
@@ -109,5 +109,7 @@ public class ResgistratseController implements Serializable {
         }
         return containsDigit;
     }
+    
+    
 
 }

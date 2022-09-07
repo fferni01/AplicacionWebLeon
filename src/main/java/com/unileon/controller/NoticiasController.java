@@ -158,6 +158,14 @@ public class NoticiasController implements Serializable{
         System.out.println(Comentarios.size());
     }
 
+    public List<Comentarios> getListaComentarios() {
+        return ListaComentarios;
+    }
+
+    public void setListaComentarios(List<Comentarios> ListaComentarios) {
+        this.ListaComentarios = ListaComentarios;
+    }
+
     
     public byte[] obtenNoticia(Noticia Noticia) {
          //InputStream is = new ByteArrayInputStream(noticia.getImagen());

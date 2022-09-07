@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../WEB-INF/Template/SesionIniciada.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -13,14 +14,12 @@
             <p:growl id="growl" showDetail="true">
                 <p:autoUpdate />
             </p:growl>
+            
             <p:outputLabel rendered="#{!noticiasController.exitendatos()}" style="display: flex;
                            justify-content: center;" value="No existen datos para mostrar todavía"/>
             <p:dataGrid rendered="#{noticiasController.exitendatos()}" id="dataGrid" var="noticia" value="#{noticiasController.listaNoticia}" columns="4" layout="grid"
                         rows="8" paginator="true" 
                         paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" pageLinks="4">
-
-
-
                 <p:card style="height: 100% ; margin: 12px">
                     <f:facet name="header">
                         <h:commandLink id="abrir" action="ListarNoticia.xhtml" actionListener="#{noticiasController.setNoticia(noticia)}">
@@ -28,25 +27,17 @@
                         </h:commandLink>
                     </f:facet>
                     <f:facet name="title">
-                         <h:commandLink id="asfd" action="ListarNoticia.xhtml" actionListener="#{noticiasController.setNoticia(noticia)}">
-                        #{noticia.titulo}
- </h:commandLink>
+                        <h:commandLink id="asfd" action="ListarNoticia.xhtml" actionListener="#{noticiasController.setNoticia(noticia)}">
+                            #{noticia.titulo}
+                        </h:commandLink>
                     </f:facet> 
-
                     #{noticiasController.obtenFecha(noticia)}    
-&nbsp;&nbsp;&nbsp;
-                    <p:commandButton value="Eliminar" update=":form" rendered="#{!noticiasController.combruebaUs()}" action="#{noticiasController.eliminarNoticia(noticia)}" icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-outlined"/>
-
-
+                    &nbsp;&nbsp;&nbsp;
+                    <p:commandButton value="Eliminar" update=":form" rendered="#{!noticiasController.combruebaUs()}" action="#{noticiasController.eliminarNoticia(noticia)}"
+                                     icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-outlined"/>
                 </p:card>
-
-
-
-
-
             </p:dataGrid>
 
-           
             <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true" style="width: 50px">
                 <p:card id ="Fav" style="height:auto;width: 450px;margin: 12px">
                     <f:facet name="header">

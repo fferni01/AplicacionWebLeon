@@ -41,7 +41,7 @@ public class MenuController implements Serializable {
     public String destruirSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         System.out.println("com.unileon.controller.MenuController.destruirSesion()");
-        return "index.xhtml";
+        return "/index.xhtml";
     }
 
     public String entrarPerfil() {
