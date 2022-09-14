@@ -53,7 +53,7 @@
 
             </p:dataGrid>
             
-            <p:dialog header="Eliminar" widgetVar="elm"  modal="true">
+            <p:dialog header="Eliminar" widgetVar="elm"  modal="true" style="margin-bottom: 200px">
                     <p:card id ="elm" style="height:  auto;width: 360px;margin: 12px">
                         <f:facet name="header">
 
@@ -76,7 +76,7 @@
                 </p:dialog>
 
 
-            <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
+            <p:dialog header="Añadir a favoritos" widgetVar="dlg" style="margin-bottom: 200px"  modal="true">
                 <p:card id ="Fav" style="height:  auto;width: 360px;margin: 12px">
                     <f:facet name="header">
 
@@ -120,12 +120,12 @@
                 </p:card>
             </p:dialog>
 
-            <p:dialog  header="Comentarios" widgetVar="com" modal="true">
+            <p:dialog  header="Comentarios" widgetVar="com" modal="true" style="margin-bottom: 200px">
                 <p:outputPanel id="a">
-                    <p:scrollPanel style="width: auto; height: 500px" mode="native">
+                    <p:scrollPanel style="width: 360px; height: 500px" mode="native">
                         <div>
-                            <p:inputTextarea value="#{restaurantesController.comentar}" placeholder="añadir un comentario..." rows="1" style="width: 100%" />
-                            <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{restaurantesController.crearComentario()}" value="Comentar" update=":form:a" />   
+                            <p:inputTextarea value="#{restaurantesController.comentar}" placeholder="añadir un comentario..." rows="1" style="width: 100%" rendered="#{restaurantesController.combruebaUs()}"/>
+                            <p:commandButton style="margin-top: 5px;margin-bottom: 5px" action="#{restaurantesController.crearComentario()}" value="Comentar" update=":form:a" rendered="#{restaurantesController.combruebaUs()}"/>   
                         </div>       
                         <p:dataScroller value="#{restaurantesController.comentarios}" var="comentario" rendered="#{restaurantesController.existenComentarios()}">
 

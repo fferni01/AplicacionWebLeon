@@ -17,6 +17,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -24,7 +25,7 @@ import javax.inject.Named;
  * @author Usuario
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class AvisosController implements Serializable{
     
     private List<Avisos>avisos;

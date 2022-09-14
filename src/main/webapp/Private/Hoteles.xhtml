@@ -9,10 +9,31 @@
 
     <ui:define name="content">
         <h:form id="form">
-
+            
             <p:growl id="growl" showDetail="true">
                 <p:autoUpdate />
             </p:growl>
+            <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
+                <p:card id ="Fav" style="height:  auto;width: 360px;margin: 12px">
+                    <f:facet name="header">
+
+                        <p:graphicImage height="280px" value="#{hotelesController.obtenHotel(hotelesController.hotel)}" stream="false"/>
+
+                    </f:facet>
+                    <f:facet name="title">
+                        #{hotelesController.hotel.titulo}
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        #{hotelesController.hotel.direccion}        
+
+                    </f:facet>
+                    <f:facet name="footer">
+                        <p:commandButton value="Añadir a Favoritos" action="#{hotelesController.aniadirFav()}" update="form" />   
+
+                    </f:facet>
+
+                </p:card>
+            </p:dialog>
             <p:outputLabel rendered="#{!hotelesController.exitendatos()}" style="display: flex;
                            justify-content: center;" value="No existen datos para mostrar todavía"/>
             <p:dataGrid rendered="#{hotelesController.exitendatos()}" id="dataGrid" var="hotel" value="#{hotelesController.hoteles}" columns="4" layout="grid"
@@ -75,27 +96,7 @@
                     </p:card>
                 </p:dialog>
             
-            <p:dialog header="Añadir a favoritos" widgetVar="dlg"  modal="true">
-                <p:card id ="Fav" style="height:  auto;width: 360px;margin: 12px">
-                    <f:facet name="header">
-
-                        <p:graphicImage height="280px" value="#{hotelesController.obtenHotel(hotelesController.hotel)}" stream="false"/>
-
-                    </f:facet>
-                    <f:facet name="title">
-                        #{hotelesController.hotel.titulo}
-                    </f:facet>
-                    <f:facet name="subtitle">
-                        #{hotelesController.hotel.direccion}        
-
-                    </f:facet>
-                    <f:facet name="footer">
-                        <p:commandButton value="Añadir a Favoritos" action="#{hotelesController.aniadirFav()}" update="form" />   
-
-                    </f:facet>
-
-                </p:card>
-            </p:dialog>
+            
 
             <p:dialog header="Eliminar de favoritos" widgetVar="dlg2"  modal="true">
                 <p:card id ="Fav2" style="height:  auto;width: 360px;margin: 12px">

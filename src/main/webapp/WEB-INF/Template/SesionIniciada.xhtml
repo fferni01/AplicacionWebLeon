@@ -26,6 +26,8 @@
                      <br/>
      
                     <h:outputLabel style="font-size:18px  ;color: black;font-weight: bold;" rendered="#{!menuController.combruebaUs()}" value="León"/>
+                    <p:commandButton value="Principal" action="#{menuController.entrarPrincipal()}" styleClass="ui-button-flat" icon="pi pi-desktop" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
+                    <br></br>
                     <p:commandButton value="Noticias" action="#{menuController.entrarNoticias()}" styleClass="ui-button-flat" icon="pi pi-book" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
                     <br></br>
                     <p:commandButton value="Eventos" action="#{menuController.entrarEventos()}" styleClass="ui-button-flat" icon="pi pi-ticket" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px" />
@@ -46,6 +48,7 @@
 
                     <h:outputLabel style="font-size:18px  ;color: black;font-weight: bold;" rendered="#{menuController.combruebaUs()}" value="Perfil"/>
                     <p:commandButton rendered="#{menuController.combruebaUs()}" value="Mi perfil" action="#{menuController.entrarPerfil()}" styleClass="ui-button-flat" icon="pi pi-user-edit" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px" />
+                    
                     <br></br>
                     <p:commandButton rendered="#{menuController.combruebaUs()}" value="Mis Favoritos" action="#{menuController.entrarFav()}"  styleClass="ui-button-flat" icon="pi pi-star" iconPos="left" style="font-size:15px; font-weight:bold;color:black; background:white; border:0px; width:300px; height:50px; margin-top: 5px"/>
 

@@ -41,7 +41,7 @@ public class MenuController implements Serializable {
     public String destruirSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         System.out.println("com.unileon.controller.MenuController.destruirSesion()");
-        return "/index.xhtml";
+        return "/index.xhtml?faces-redirect=false";
     }
 
     public String entrarPerfil() {
@@ -51,7 +51,9 @@ public class MenuController implements Serializable {
     public String entrarNoticias() {
         return "/Private/Noticias.xhtml?faces-redirect=true";
     }
-
+    public String entrarPrincipal() {
+        return "/Private/Usuario/PrincipalUsuario.xhtml?faces-redirect=true";
+    }
     public String entrarEventos() {
         return "/Private/Eventos.xhtml?faces-redirect=true";
     }
